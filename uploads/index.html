@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Veross — Formulários</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html,body{min-height:100%;background:#060923;font-family:'DM Sans','Segoe UI',sans-serif;color:#FCFCFC;}
+a{text-decoration:none;color:inherit;}
+</style>
+</head>
+<body style="padding:0;min-height:100vh;display:flex;flex-direction:column;">
+
+<!-- Top bar -->
+<header style="padding:28px 48px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(174,138,86,.12);">
+  <img src="assets/brand/logo-veross-white.svg" alt="Veross" style="height:32px;width:auto;opacity:.9;">
+  <span style="font-family:'DM Mono',monospace;font-size:11px;color:rgba(174,138,86,.5);letter-spacing:3px;text-transform:uppercase;">Hub de Formulários</span>
+</header>
+
+<!-- Hero -->
+<section style="padding:72px 48px 56px;max-width:900px;">
+  <div style="font-size:11px;letter-spacing:4px;text-transform:uppercase;color:#AE8A56;margin-bottom:16px;font-weight:500;">Veross</div>
+  <h1 style="font-family:'Bebas Neue',sans-serif;font-size:clamp(48px,6vw,80px);letter-spacing:3px;line-height:.95;margin-bottom:18px;">FORMULÁRIOS<br><span style="color:#AE8A56;">ATIVOS</span></h1>
+  <div style="width:48px;height:2px;background:#AE8A56;margin-bottom:22px;"></div>
+  <p style="font-size:15px;color:rgba(252,252,252,.45);line-height:1.75;max-width:480px;font-weight:300;">Acesso centralizado a todos os formulários e diagnósticos da Veross. Compartilhe o link direto de cada um com seu cliente.</p>
+</section>
+
+<!-- Forms grid -->
+<main style="flex:1;padding:0 48px 80px;max-width:1100px;">
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;">
+
+    <!-- Card: Diagnostico ECOV -->
+    <a href="forms/diagnostico-ecov/index.html" style="display:flex;flex-direction:column;background:rgba(255,255,255,.03);border:1px solid rgba(174,138,86,.18);border-radius:12px;padding:28px;gap:14px;transition:border-color .2s,background .2s;"
+      onmouseover="this.style.background='rgba(174,138,86,.07)';this.style.borderColor='rgba(174,138,86,.45)';"
+      onmouseout="this.style.background='rgba(255,255,255,.03)';this.style.borderColor='rgba(174,138,86,.18)';">
+      <div style="display:flex;align-items:center;justify-content:space-between;">
+        <span style="font-family:'DM Mono',monospace;font-size:11px;color:#AE8A56;letter-spacing:3px;">01</span>
+        <span style="font-size:11px;letter-spacing:2px;text-transform:uppercase;color:rgba(45,138,87,.9);background:rgba(45,138,87,.12);padding:4px 10px;border-radius:20px;font-weight:600;">Ativo</span>
+      </div>
+      <div>
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:26px;letter-spacing:2px;color:#FCFCFC;line-height:1.05;margin-bottom:6px;">Diagnostico ECOV</div>
+        <p style="font-size:13px;color:rgba(252,252,252,.4);line-height:1.6;">Mapeamento completo da operação comercial — 12 seções, 45–60 min.</p>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;margin-top:auto;padding-top:14px;border-top:1px solid rgba(174,138,86,.1);">
+        <span style="font-size:12px;color:rgba(174,138,86,.6);">forms/diagnostico-ecov/</span>
+        <span style="margin-left:auto;color:#AE8A56;font-size:18px;">→</span>
+      </div>
+    </a>
+
+    <!-- Card: Prospect Veross -->
+    <a href="forms/prospect-veross/index.dc.html" style="display:flex;flex-direction:column;background:rgba(255,255,255,.03);border:1px solid rgba(174,138,86,.18);border-radius:12px;padding:28px;gap:14px;transition:border-color .2s,background .2s;"
+      onmouseover="this.style.background='rgba(174,138,86,.07)';this.style.borderColor='rgba(174,138,86,.45)';"
+      onmouseout="this.style.background='rgba(255,255,255,.03)';this.style.borderColor='rgba(174,138,86,.18)';">
+      <div style="display:flex;align-items:center;justify-content:space-between;">
+        <span style="font-family:'DM Mono',monospace;font-size:11px;color:#AE8A56;letter-spacing:3px;">02</span>
+        <span style="font-size:11px;letter-spacing:2px;text-transform:uppercase;color:rgba(45,138,87,.9);background:rgba(45,138,87,.12);padding:4px 10px;border-radius:20px;font-weight:600;">Ativo</span>
+      </div>
+      <div>
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:26px;letter-spacing:2px;color:#FCFCFC;line-height:1.05;margin-bottom:6px;">Prospect Veross</div>
+        <p style="font-size:13px;color:rgba(252,252,252,.4);line-height:1.6;">Diagnóstico de maturidade comercial para prospects — contexto, situação, time, sintomas, objetivos e decisão.</p>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;margin-top:auto;padding-top:14px;border-top:1px solid rgba(174,138,86,.1);">
+        <span style="font-size:12px;color:rgba(174,138,86,.6);">forms/prospect-veross/</span>
+        <span style="margin-left:auto;color:#AE8A56;font-size:18px;">→</span>
+      </div>
+    </a>
+
+    <!-- Card: Placeholder novo form -->
+    <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;background:transparent;border:1.5px dashed rgba(174,138,86,.15);border-radius:12px;padding:28px;gap:10px;min-height:180px;cursor:default;">
+      <div style="width:36px;height:36px;border-radius:50%;border:1.5px solid rgba(174,138,86,.2);display:flex;align-items:center;justify-content:center;">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(174,138,86,.4)" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+      </div>
+      <span style="font-size:12px;color:rgba(174,138,86,.3);letter-spacing:2px;text-transform:uppercase;">Novo formulário</span>
+    </div>
+
+  </div>
+</main>
+
+<!-- Footer -->
+<footer style="padding:22px 48px;border-top:1px solid rgba(174,138,86,.08);display:flex;align-items:center;justify-content:space-between;">
+  <span style="font-size:12px;color:rgba(252,252,252,.2);">© Veross · Todos os direitos reservados</span>
+  <span style="font-family:'DM Mono',monospace;font-size:11px;color:rgba(174,138,86,.25);letter-spacing:2px;">v1.0</span>
+</footer>
+
+</body>
+</html>
