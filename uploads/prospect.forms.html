@@ -1,0 +1,876 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    body { margin:0; padding:24px 20px 60px; background:#FCFCFC; font-family:'DM Sans',sans-serif; color:#0A0A0A; }
+    a { color:#AE8A56; }
+    a:hover { color:#C9A97A; }
+    input:focus, select:focus, textarea:focus { outline:none; border-color:#AE8A56 !important; box-shadow:0 0 0 3px rgba(174,138,86,0.15); }
+  </style>
+</helmet>
+
+<div style="max-width:860px;margin:0 auto;background:#FCFCFC;border-radius:12px;box-shadow:0 8px 30px rgba(6,9,35,0.08);overflow:hidden;border:1px solid rgba(174,138,86,0.15)">
+
+  <!-- HEADER -->
+  <header style="background:#060923;padding:32px 40px 24px;border-bottom:3px solid #AE8A56">
+    <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px">
+      <div style="font-family:'Bebas Neue',sans-serif;font-size:32px;letter-spacing:4px;color:#FCFCFC;line-height:1">
+        VEROSS
+        <span style="color:#AE8A56;font-size:12px;letter-spacing:3px;display:block;font-family:'DM Sans',sans-serif;font-weight:400;margin-top:2px">Diagnóstico de Maturidade Comercial</span>
+      </div>
+    </div>
+    <div style="font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:2px;color:#AE8A56;margin-top:12px">Vamos entender seu momento comercial</div>
+    <div style="font-size:13px;color:rgba(255,255,255,0.5);font-weight:300">Leva cerca de 10 minutos. Suas respostas nos ajudam a entender melhor o seu negócio.</div>
+  </header>
+
+  <!-- PROGRESS -->
+  <sc-if value="{{ notSubmitted }}" hint-placeholder-val="{{ true }}">
+  <div style="padding:20px 40px 0;background:#FCFCFC">
+    <ul style="display:flex;justify-content:space-between;list-style:none;margin:0 0 4px;padding:0 4px;font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:1px">
+      <sc-for list="{{ stepChrome }}" as="s" hint-placeholder-count="7">
+        <li style="display:flex;flex-direction:column;align-items:center;gap:4px;flex:1;text-align:center;color:{{ s.textColor }}">
+          <span style="display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:50%;font-size:12px;font-weight:700;background:{{ s.circleBg }};color:{{ s.circleColor }}">{{ s.n }}</span>
+          {{ s.label }}
+        </li>
+      </sc-for>
+    </ul>
+    <div style="width:100%;height:4px;background:#CDCDD0;border-radius:4px;margin:6px 0 0;overflow:hidden">
+      <div style="height:100%;background:#AE8A56;border-radius:4px;width:{{ progressPct }}"></div>
+    </div>
+  </div>
+
+  <div style="padding:24px 40px 32px">
+
+    <sc-if value="{{ stepError }}" hint-placeholder-val="{{ false }}">
+      <div style="background:rgba(200,0,0,0.06);border-left:4px solid #c00;padding:10px 16px;border-radius:6px;margin-bottom:20px;font-size:13px;color:#900">{{ stepError }}</div>
+    </sc-if>
+
+    <!-- STEP 0 -->
+    <sc-if value="{{ stepIs0 }}" hint-placeholder-val="{{ true }}">
+      <div>
+        <h2 style="font-family:'Bebas Neue',sans-serif;font-size:32px;color:#060923;letter-spacing:1px;margin:0 0 4px">A. Identificação e Contexto</h2>
+        <p style="font-size:14px;color:#555;margin:0 0 24px;font-weight:300">Conte um pouco sobre você e sua empresa.</p>
+
+        <div style="margin-bottom:24px">
+          <label style="display:block;font-weight:600;font-size:14px;color:#060923;margin-bottom:4px">Nome da empresa <span style="color:#c00;margin-left:2px">*</span></label>
+          <input type="text" value="{{ form.company_name }}" onChange="{{ f.company_name }}" placeholder="Ex: Tech Solutions Ltda" style="width:100%;padding:10px 14px;border:1px solid #ddd;border-radius:8px;font-size:14px;background:#FCFCFC;color:#0A0A0A" />
+        </div>
+        <div style="margin-bottom:24px">
+          <label style="display:block;font-weight:600;font-size:14px;color:#060923;margin-bottom:4px">Nome do responsável <span style="color:#c00;margin-left:2px">*</span></label>
+          <input type="text" value="{{ form.contact_name }}" onChange="{{ f.contact_name }}" placeholder="Nome completo" style="width:100%;padding:10px 14px;border:1px solid #ddd;border-radius:8px;font-size:14px;background:#FCFCFC;color:#0A0A0A" />
+        </div>
+        <div style="margin-bottom:24px">
+          <label style="display:block;font-weight:600;font-size:14px;color:#060923;margin-bottom:4px">Cargo / função <span style="color:#c00;margin-left:2px">*</span></label>
+          <input type="text" value="{{ form.contact_role }}" onChange="{{ f.contact_role }}" placeholder="Ex: Diretor Comercial" style="width:100%;padding:10px 14px;border:1px solid #ddd;border-radius:8px;font-size:14px;background:#FCFCFC;color:#0A0A0A" />
+        </div>
+        <div style="margin-bottom:24px">
+          <label style="display:block;font-weight:600;font-size:14px;color:#060923;margin-bottom:4px">E-mail <span style="color:#c00;margin-left:2px">*</span></label>
+          <input type="email" value="{{ form.contact_email }}" onChange="{{ f.contact_email }}" placeholder="email@empresa.com" style="width:100%;padding:10px 14px;border:1px solid #ddd;border-radius:8px;font-size:14px;background:#FCFCFC;color:#0A0A0A" />
+        </div>
+        <div style="margin-bottom:24px">
+          <label style="display:block;font-weight:600;font-size:14px;color:#060923;margin-bottom:4px">WhatsApp</label>
+          <input type="text" value="{{ form.contact_whatsapp }}" onChange="{{ f.contact_whatsapp }}" placeholder="(11) 99999-9999" style="width:100%;padding:10px 14px;border:1px solid #ddd;border-radius:8px;font-size:14px;background:#FCFCFC;color:#0A0A0A" />
+        </div>
+        <div style="margin-bottom:24px">
+          <label style="display:block;font-weight:600;font-size:14px;color:#060923;margin-bottom:4px">Site</label>
+          <input type="url" value="{{ form.company_website }}" onChange="{{ f.company_website }}" placeholder="https://www.empresa.com" style="width:100%;padding:10px 14px;border:1px solid #ddd;border-radius:8px;font-size:14px;background:#FCFCFC;color:#0A0A0A" />
+        </div>
+        <div style="margin-bottom:24px">
+          <label style="display:block;font-weight:600;font-size:14px;color:#060923;margin-bottom:4px">LinkedIn da empresa</label>
+          <input type="url" value="{{ form.company_linkedin }}" onChange="{{ f.company_linkedin }}" placeholder="https://www.linkedin.com/company/..." style="width:100%;padding:10px 14px;border:1px solid #ddd;border-radius:8px;font-size:14px;background:#FCFCFC;color:#0A0A0A" />
+        </div>
+
+        <div style="margin-bottom:24px">
+          <label style="display:block;font-weight:600;font-size:14px;color:#060923;margin-bottom:4px">Em qual segmento a empresa atua e o que vocês vendem? <span style="color:#c00;margin-left:2px">*</span></label>
+          <textarea rows="3" value="{{ form.business_description }}" onChange="{{ f.business_description }}" placeholder="Descreva o segmento, cliente principal e solução principal..." style="width:100%;padding:10px 14px;border:1px solid #ddd;border-radius:8px;font-size:14px;background:#FCFCFC;color:#0A0A0A;resize:vertical;min-height:80px"></textarea>
+        </div>
+
+        <div style="margin-bottom:24px">
+          <label style="display:block;font-weight:600;font-size:14px;color:#060923;margin-bottom:4px">Modelo de receita <span style="color:#c00;margin-left:2px">*</span></label>
+          <select value="{{ form.revenue_model }}" onChange="{{ f.revenue_model }}" style="width:100%;padding:10px 14px;border:1px solid #ddd;border-radius:8px;font-size:14px;background:#FCFCFC;color:#0A0A0A">
+            <option value="">Selecione...</option>
+            <option value="Recorrente">Recorrente (mensalidade, assinatura)</option>
+            <option value="Projeto">Projeto (vendas únicas de escopo definido)</option>
+            <option value="Misto">Misto (recorrência + projetos)</option>
+            <option value="Transacional">Transacional (múltiplas vendas menores)</option>
+          </select>
+        </div>
+
+        <div style="margin-bottom:24px">
+          <label style="display:block;font-weight:600;font-size:14px;color:#060923;margin-bottom:4px">Perfil de empresa que atendem (marque as que representam &gt;20% da base) <span style="color:#c00;margin-left:2px">*</span></label>
+          <div style="display:flex;flex-wrap:wrap;gap:10px 20px;margin-top:4px">
+            <sc-for list="{{ clientSizeOptions }}" as="opt" hint-placeholder-count="5">
+              <label style="display:flex;align-items:center;gap:6px;font-weight:400;font-size:14px;color:#222;cursor:pointer">
+                <input type="checkbox" checked="{{ opt.checked }}" onChange="{{ opt.onChange }}" style="accent-color:#AE8A56;width:16px;height:16px" /> {{ opt.label }}
+              </label>
+            </sc-for>
+          </div>
+        </div>
+
+        <div style="margin-bottom:24px">
+          <label style="display:block;font-weight:600;font-size:14px;color:#060923;margin-bottom:4px">Quem toma a decisão de compra? (cargo/função) <span style="color:#c00;margin-left:2px">*</span></label>
+          <input type="text" value="{{ form.buyer_persona }}" onChange="{{ f.buyer_persona }}" placeholder="Ex: Diretor de Operações, CEO, Comitê..." style="width:100%;padding:10px 14px;border:1px solid #ddd;border-radius:8px;font-size:14px;background:#FCFCFC;color:#0A0A0A" />
+          <div style="background:#f0f0f0;border-radius:6px;padding:6px 12px;font-size:12px;color:#555;margin-top:4px;font-style:italic">Há múltiplos decisores ou influenciadores?</div>
+        </div>
+
+        <div style="margin-bottom:24px">
+          <label style="display:block;font-weight:600;font-size:14px;color:#060923;margin-bottom:4px">Faixa de ticket médio por cliente/contrato <span style="color:#c00;margin-left:2px">*</span></label>
+          <select value="{{ form.avg_ticket_range }}" onChange="{{ f.avg_ticket_range }}" style="width:100%;padding:10px 14px;border:1px solid #ddd;border-radius:8px;font-size:14px;background:#FCFCFC;color:#0A0A0A">
+            <option value="">Selecione...</option>
+            <option value="Até R$ 1.000">Até R$ 1.000 por mês/venda</option>
+            <option value="R$ 1.001 a R$ 5.000">R$ 1.001 a R$ 5.000</option>
+            <option value="R$ 5.001 a R$ 15.000">R$ 5.001 a R$ 15.000</option>
+            <option value="R$ 15.001 a R$ 50.000">R$ 15.001 a R$ 50.000</option>
+            <option value="Acima de R$ 50.000">Acima de R$ 50.000</option>
+          </select>
+        </div>
+
+        <div style="margin-bottom:24px">
+          <label style="display:block;font-weight:600;font-size:14px;color:#060923;margin-bottom:4px">Há quanto tempo a empresa atua com essa oferta? <span style="color:#c00;margin-left:2px">*</span></label>
+          <select value="{{ form.company_market_time }}" onChange="{{ f.company_market_time }}" style="width:100%;padding:10px 14px;border:1px solid #ddd;border-radius:8px;font-size:14px;background:#FCFCFC;color:#0A0A0A">
+            <option value="">Selecione...</option>
+            <option value="Menos de 1 ano">Menos de 1 ano</option>
+            <option value="1 a 3 anos">1 a 3 anos</option>
+            <option value="3 a 7 anos">3 a 7 anos</option>
+            <option value="Mais de 7 anos">Mais de 7 anos</option>
+          </select>
+        </div>
+
+        <div style="display:flex;justify-content:space-between;margin-top:32px;padding-top:20px;border-top:1px solid rgba(174,138,86,0.2)">
+          <span></span>
+          <button type="button" onClick="{{ nextStep }}" style="padding:10px 28px;border:none;border-radius:30px;font-weight:600;font-size:14px;cursor:pointer;background:#AE8A56;color:#FCFCFC">Próximo →</button>
+        </div>
+      </div>
+    </sc-if>
+
+    <!-- STEP 1 -->
+    <sc-if value="{{ stepIs1 }}" hint-placeholder-val="{{ false }}">
+      <div>
+        <h2 style="font-family:'Bebas Neue',sans-serif;font-size:32px;color:#060923;letter-spacing:1px;margin:0 0 4px">B. Situação Comercial Atual</h2>
+        <p style="font-size:14px;color:#555;margin:0 0 24px;font-weight:300">Como o negócio gera e fecha oportunidades hoje.</p>
+
+        <div style="margin-bottom:24px">
+          <label style="display:block;font-weight:600;font-size:14px;color:#060923;margin-bottom:4px">De onde vêm a maioria dos novos clientes? (marque as que representam &gt;20%) <span style="color:#c00;margin-left:2px">*</span></label>
+          <div style="display:flex;flex-wrap:wrap;gap:10px 20px;margin-top:4px">
+            <sc-for list="{{ leadSourceOptions }}" as="opt" hint-placeholder-count="7">
+              <label style="display:flex;align-items:center;gap:6px;font-weight:400;font-size:14px;color:#222;cursor:pointer">
+                <input type="checkbox" checked="{{ opt.checked }}" onChange="{{ opt.onChange }}" style="accent-color:#AE8A56;width:16px;height:16px" /> {{ opt.label }}
+                <sc-if value="{{ opt.hasText }}" hint-placeholder-val="{{ false }}">
+                  <input type="text" value="{{ opt.textValue }}" onChange="{{ opt.onTextChange }}" placeholder="Especifique" style="width:auto;padding:4px 8px;border:1px solid #ddd;border-radius:4px;margin-left:4px" />
+                </sc-if>
+              </label>
+            </sc-for>
+          </div>
+        </div>
+
+        <div style="margin-bottom:24px">
+          <label style="display:block;font-weight:600;font-size:14px;color:#060923;margin-bottom:4px">Como descreveria o processo de prospecção ativa? <span style="color:#c00;margin-left:2px">*</span></label>
+          <select value="{{ form.outbound_maturity }}" onChange="{{ f.outbound_maturity }}" style="width:100%;padding:10px 14px;border:1px solid #ddd;border-radius:8px;font-size:14px;background:#FCFCFC;color:#0A0A0A">
+            <option value="">Selecione...</option>
+            <option value="Não temos prospecção ativa estruturada">Não temos prospecção ativa estruturada</option>
+            <option value="Temos, mas é informal e depende do esforço individual">Temos, mas é informal e depende do esforço individual</option>
+            <option value="Temos cadências definidas, mas pouco monitoradas">Temos cadências definidas, mas pouco monitoradas</option>
+            <option value="Temos um processo estruturado, documentado e monitorado">Temos um processo estruturado, documentado e monitorado</option>
+          </select>
+        </div>
+
+        <div style="margin-bottom:24px">
+          <label style="display:block;font-weight:600;font-size:14px;color:#060923;margin-bottom:4px">O sócio/dono/CEO precisa estar presente na maioria das negociações? <span style="color:#c00;margin-left:2px">*</span></label>
+          <select value="{{ form.owner_dependency }}" onChange="{{ f.owner_dependency }}" style="width:100%;padding:10px 14px;border:1px solid #ddd;border-radius:8px;font-size:14px;background:#FCFCFC;color:#0A0A0A">
+            <option value="">Selecione...</option>
+            <option value="Sim, praticamente em todas">Sim, praticamente em todas</option>
+            <option value="Na maioria sim, mas há exceções">Na maioria sim, mas há exceções pontuais</option>
+            <option value="Em parte delas, depende do porte">Em parte delas, depende do porte ou complexidade</option>
+            <option value="Raramente, o time fecha sozinho">Raramente, o time fecha sozinho com autonomia</option>
+          </select>
+        </div>
+
+        <div style="margin-bottom:24px">
+          <label style="display:block;font-weight:600;font-size:14px;color:#060923;margin-bottom:4px">Conseguem estimar com precisão o quanto vão fechar nos próximos 30 a 60 dias? <span style="color:#c00;margin-left:2px">*</span></label>
+          <select value="{{ form.pipeline_predictability }}" onChange="{{ f.pipeline_predictability }}" style="width:100%;padding:10px 14px;border:1px solid #ddd;border-radius:8px;font-size:14px;background:#FCFCFC;color:#0A0A0A">
+            <option value="">Selecione...</option>
+            <option value="Não, é praticamente imprevisível">Não, é praticamente imprevisível</option>
+            <option value="Temos uma ideia geral, mas com muita variação">Temos uma ideia geral, mas com muita variação</option>
+            <option value="Temos razoável previsibilidade, mas não formalizado">Temos razoável previsibilidade, mas não formalizado</option>
+            <option value="Sim, temos forecast estruturado e confiável">Sim, temos forecast estruturado e confiável</option>
+          </select>
+        </div>
+
+        <div style="margin-bottom:24px">
+          <label style="display:block;font-weight:600;font-size:14px;color:#060923;margin-bottom:4px">Ferramentas comerciais utilizadas ativamente <span style="color:#c00;margin-left:2px">*</span></label>
+          <div style="display:flex;flex-wrap:wrap;gap:10px 20px;margin-top:4px">
+            <sc-for list="{{ techStackOptions }}" as="opt" hint-placeholder-count="8">
+              <label style="display:flex;align-items:center;gap:6px;font-weight:400;font-size:14px;color:#222;cursor:pointer">
+                <input type="checkbox" checked="{{ opt.checked }}" onChange="{{ opt.onChange }}" style="accent-color:#AE8A56;width:16px;height:16px" /> {{ opt.label }}
+                <sc-if value="{{ opt.hasText }}" hint-placeholder-val="{{ false }}">
+                  <input type="text" value="{{ opt.textValue }}" onChange="{{ opt.onTextChange }}" placeholder="{{ opt.textPlaceholder }}" style="width:120px;padding:4px 8px;border:1px solid #ddd;border-radius:4px;margin-left:4px" />
+                </sc-if>
+              </label>
+            </sc-for>
+          </div>
+        </div>
+
+        <sc-if value="{{ crmChecked }}" hint-placeholder-val="{{ false }}">
+          <div style="margin-bottom:24px">
+            <label style="display:block;font-weight:600;font-size:14px;color:#060923;margin-bottom:4px">O CRM usado reflete a realidade do pipeline com fidelidade?</label>
+            <select value="{{ form.crm_usage_quality }}" onChange="{{ f.crm_usage_quality }}" style="width:100%;padding:10px 14px;border:1px solid #ddd;border-radius:8px;font-size:14px;background:#FCFCFC;color:#0A0A0A">
+              <option value="">Selecione...</option>
+              <option value="Sim, está atualizado e é usado consistentemente">Sim, está atualizado e é usado consistentemente</option>
+              <option value="Parcialmente, fica desatualizado">Parcialmente, fica desatualizado com frequência</option>
+              <option value="Não, é subutilizado ou mal configurado">Não, é subutilizado ou mal configurado</option>
+            </select>
+          </div>
+        </sc-if>
+
+        <div style="display:flex;justify-content:space-between;margin-top:32px;padding-top:20px;border-top:1px solid rgba(174,138,86,0.2)">
+          <button type="button" onClick="{{ prevStep }}" style="padding:10px 28px;border:none;border-radius:30px;font-weight:600;font-size:14px;cursor:pointer;background:#060923;color:#FCFCFC">← Voltar</button>
+          <button type="button" onClick="{{ nextStep }}" style="padding:10px 28px;border:none;border-radius:30px;font-weight:600;font-size:14px;cursor:pointer;background:#AE8A56;color:#FCFCFC">Próximo →</button>
+        </div>
+      </div>
+    </sc-if>
+
+    <!-- STEP 2 -->
+    <sc-if value="{{ stepIs2 }}" hint-placeholder-val="{{ false }}">
+      <div>
+        <h2 style="font-family:'Bebas Neue',sans-serif;font-size:32px;color:#060923;letter-spacing:1px;margin:0 0 4px">C. Time e Capacidades</h2>
+        <p style="font-size:14px;color:#555;margin:0 0 24px;font-weight:300">Conte sobre o time comercial de hoje.</p>
+
+        <div style="margin-bottom:24px">
+          <label style="display:block;font-weight:600;font-size:14px;color:#060923;margin-bottom:4px">Composição atual do time comercial <span style="color:#c00;margin-left:2px">*</span></label>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px 20px;margin-top:6px">
+            <div>
+              <label style="display:block;font-weight:600;font-size:14px;color:#060923;margin-bottom:4px">Sócios/diretores que vendem ativamente</label>
+              <input type="number" min="0" value="{{ form.team_owners }}" onChange="{{ f.team_owners }}" style="width:80px;padding:10px 14px;border:1px solid #ddd;border-radius:8px;font-size:14px" />
+            </div>
+            <div>
+              <label style="display:block;font-weight:600;font-size:14px;color:#060923;margin-bottom:4px">Executivos de vendas (closers / AEs)</label>
+              <input type="number" min="0" value="{{ form.team_closers }}" onChange="{{ f.team_closers }}" style="width:80px;padding:10px 14px;border:1px solid #ddd;border-radius:8px;font-size:14px" />
+            </div>
+            <div>
+              <label style="display:block;font-weight:600;font-size:14px;color:#060923;margin-bottom:4px">SDRs ou pré-vendedores</label>
+              <input type="number" min="0" value="{{ form.team_sdrs }}" onChange="{{ f.team_sdrs }}" style="width:80px;padding:10px 14px;border:1px solid #ddd;border-radius:8px;font-size:14px" />
+            </div>
+            <div>
+              <label style="display:block;font-weight:600;font-size:14px;color:#060923;margin-bottom:4px">Assistentes / backoffice de vendas</label>
+              <input type="number" min="0" value="{{ form.team_assistants }}" onChange="{{ f.team_assistants }}" style="width:80px;padding:10px 14px;border:1px solid #ddd;border-radius:8px;font-size:14px" />
+            </div>
+            <div style="grid-column:1/-1">
+              <label style="display:block;font-weight:600;font-size:14px;color:#060923;margin-bottom:4px">Gestores / coordenadores comerciais</label>
+              <input type="number" min="0" value="{{ form.team_managers }}" onChange="{{ f.team_managers }}" style="width:80px;padding:10px 14px;border:1px solid #ddd;border-radius:8px;font-size:14px" />
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-bottom:24px">
+          <label style="display:block;font-weight:600;font-size:14px;color:#060923;margin-bottom:4px">Existe separação formal entre quem prospecta e quem fecha? <span style="color:#c00;margin-left:2px">*</span></label>
+          <select value="{{ form.presales_sales_split }}" onChange="{{ f.presales_sales_split }}" style="width:100%;padding:10px 14px;border:1px solid #ddd;border-radius:8px;font-size:14px;background:#FCFCFC;color:#0A0A0A">
+            <option value="">Selecione...</option>
+            <option value="Não, a mesma pessoa faz as duas coisas">Não, a mesma pessoa faz as duas coisas</option>
+            <option value="Parcialmente, sem divisão clara">Parcialmente, mas sem divisão clara</option>
+            <option value="Sim, papéis distintos e bem definidos">Sim, papéis distintos e bem definidos</option>
+          </select>
+        </div>
+
+        <div style="margin-bottom:24px">
+          <label style="display:block;font-weight:600;font-size:14px;color:#060923;margin-bottom:4px">Como o time aprendeu a vender o produto/serviço? <span style="color:#c00;margin-left:2px">*</span></label>
+          <select value="{{ form.team_training_model }}" onChange="{{ f.team_training_model }}" style="width:100%;padding:10px 14px;border:1px solid #ddd;border-radius:8px;font-size:14px;background:#FCFCFC;color:#0A0A0A">
+            <option value="">Selecione...</option>
+            <option value="Por conta própria, testando na prática">Por conta própria, testando na prática</option>
+            <option value="Com orientação informal do sócio/gestor">Com orientação informal do sócio/gestor</option>
+            <option value="Com materiais internos (playbook, scripts)">Com materiais internos (playbook, scripts)</option>
+            <option value="Com treinamento estruturado, interno ou externo">Com treinamento estruturado, interno ou externo</option>
+            <option value="Ainda estamos formando o time">Ainda estamos formando o time</option>
+          </select>
+        </div>
+
+        <div style="margin-bottom:24px">
+          <label style="display:block;font-weight:600;font-size:14px;color:#060923;margin-bottom:4px">Avaliação das habilidades comerciais do time (1 = precisa muito, 5 = sólido)</label>
+          <sc-for list="{{ skillsList }}" as="skill" hint-placeholder-count="5">
+            <div style="margin-bottom:12px;padding:8px 12px;background:#f9f9f9;border-radius:8px;border-left:3px solid #C9A97A">
+              <span style="font-weight:500;font-size:14px;color:#060923;margin-bottom:4px;display:block">{{ skill.label }}</span>
+              <div style="display:flex;flex-wrap:wrap;gap:6px 12px;margin-top:4px">
+                <sc-for list="{{ skill.options }}" as="opt" hint-placeholder-count="5">
+                  <label style="display:flex;align-items:center;gap:4px;font-weight:400;font-size:13px;color:#222;cursor:pointer">
+                    <input type="radio" checked="{{ opt.checked }}" onChange="{{ opt.onChange }}" style="accent-color:#AE8A56;width:15px;height:15px" /> {{ opt.n }}
+                  </label>
+                </sc-for>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+
+        <div style="margin-bottom:24px">
+          <label style="display:block;font-weight:600;font-size:14px;color:#060923;margin-bottom:4px">Existe uma rotina de gestão comercial? <span style="color:#c00;margin-left:2px">*</span></label>
+          <select value="{{ form.management_routine }}" onChange="{{ f.management_routine }}" style="width:100%;padding:10px 14px;border:1px solid #ddd;border-radius:8px;font-size:14px;background:#FCFCFC;color:#0A0A0A">
+            <option value="">Selecione...</option>
+            <option value="Não, não temos rotina estruturada">Não, não temos rotina estruturada</option>
+            <option value="Temos metas, mas pouco acompanhamento">Temos metas, mas pouco acompanhamento sistemático</option>
+            <option value="Temos reuniões periódicas e alguns indicadores">Temos reuniões periódicas e alguns indicadores</option>
+            <option value="Temos cadência robusta (dailys, 1:1, forecast)">Temos cadência robusta (dailys, 1:1, forecast)</option>
+          </select>
+        </div>
+
+        <div style="margin-bottom:24px">
+          <label style="display:block;font-weight:600;font-size:14px;color:#060923;margin-bottom:4px">Como acontece o onboarding de um novo vendedor? <span style="color:#c00;margin-left:2px">*</span></label>
+          <select value="{{ form.onboarding_process }}" onChange="{{ f.onboarding_process }}" style="width:100%;padding:10px 14px;border:1px solid #ddd;border-radius:8px;font-size:14px;background:#FCFCFC;color:#0A0A0A">
+            <option value="">Selecione...</option>
+            <option value="Não temos processo, aprende sozinho">Não temos processo, aprende sozinho</option>
+            <option value="Gestor/sócio acompanha alguns dias">Gestor/sócio acompanha alguns dias</option>
+            <option value="Temos roteiro informal de integração">Temos roteiro informal de integração</option>
+            <option value="Temos plano estruturado com etapas e prazo">Temos plano estruturado com etapas e prazo</option>
+          </select>
+        </div>
+
+        <div style="display:flex;justify-content:space-between;margin-top:32px;padding-top:20px;border-top:1px solid rgba(174,138,86,0.2)">
+          <button type="button" onClick="{{ prevStep }}" style="padding:10px 28px;border:none;border-radius:30px;font-weight:600;font-size:14px;cursor:pointer;background:#060923;color:#FCFCFC">← Voltar</button>
+          <button type="button" onClick="{{ nextStep }}" style="padding:10px 28px;border:none;border-radius:30px;font-weight:600;font-size:14px;cursor:pointer;background:#AE8A56;color:#FCFCFC">Próximo →</button>
+        </div>
+      </div>
+    </sc-if>
+
+    <!-- STEP 3 -->
+    <sc-if value="{{ stepIs3 }}" hint-placeholder-val="{{ false }}">
+      <div>
+        <h2 style="font-family:'Bebas Neue',sans-serif;font-size:32px;color:#060923;letter-spacing:1px;margin:0 0 4px">D. Sintomas e Gargalos</h2>
+        <p style="font-size:14px;color:#555;margin:0 0 24px;font-weight:300">Indique o quanto cada afirmação descreve a realidade (1 = não se aplica, 5 = descreve muito bem).</p>
+
+        <div style="margin-bottom:24px">
+          <label style="display:block;font-weight:600;font-size:14px;color:#060923;margin-bottom:4px">Grau de aderência <span style="color:#c00;margin-left:2px">*</span></label>
+          <sc-for list="{{ symptomsList }}" as="sym" hint-placeholder-count="10">
+            <div style="margin-bottom:12px;padding:8px 12px;background:#f9f9f9;border-radius:8px;border-left:3px solid #C9A97A">
+              <span style="font-weight:500;font-size:14px;color:#060923;margin-bottom:4px;display:block">{{ sym.label }}</span>
+              <div style="display:flex;flex-wrap:wrap;gap:6px 12px;margin-top:4px">
+                <sc-for list="{{ sym.options }}" as="opt" hint-placeholder-count="5">
+                  <label style="display:flex;align-items:center;gap:4px;font-weight:400;font-size:13px;color:#222;cursor:pointer">
+                    <input type="radio" checked="{{ opt.checked }}" onChange="{{ opt.onChange }}" style="accent-color:#AE8A56;width:15px;height:15px" /> {{ opt.n }}
+                  </label>
+                </sc-for>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+
+        <div style="margin-bottom:24px">
+          <label style="display:block;font-weight:600;font-size:14px;color:#060923;margin-bottom:4px">Dentre os itens com nota 4 ou 5, qual causa mais impacto no negócio hoje? <span style="color:#c00;margin-left:2px">*</span></label>
+          <input type="text" value="{{ form.main_pain_point }}" onChange="{{ f.main_pain_point }}" placeholder="Descreva o principal gargalo..." style="width:100%;padding:10px 14px;border:1px solid #ddd;border-radius:8px;font-size:14px;background:#FCFCFC;color:#0A0A0A" />
+        </div>
+
+        <div style="margin-bottom:24px">
+          <label style="display:block;font-weight:600;font-size:14px;color:#060923;margin-bottom:4px">Existe algum desafio comercial relevante que não apareceu acima?</label>
+          <textarea rows="2" value="{{ form.additional_pain_points }}" onChange="{{ f.additional_pain_points }}" placeholder="Descreva outros desafios..." style="width:100%;padding:10px 14px;border:1px solid #ddd;border-radius:8px;font-size:14px;background:#FCFCFC;color:#0A0A0A;resize:vertical;min-height:80px"></textarea>
+        </div>
+
+        <div style="display:flex;justify-content:space-between;margin-top:32px;padding-top:20px;border-top:1px solid rgba(174,138,86,0.2)">
+          <button type="button" onClick="{{ prevStep }}" style="padding:10px 28px;border:none;border-radius:30px;font-weight:600;font-size:14px;cursor:pointer;background:#060923;color:#FCFCFC">← Voltar</button>
+          <button type="button" onClick="{{ nextStep }}" style="padding:10px 28px;border:none;border-radius:30px;font-weight:600;font-size:14px;cursor:pointer;background:#AE8A56;color:#FCFCFC">Próximo →</button>
+        </div>
+      </div>
+    </sc-if>
+
+    <!-- STEP 4 -->
+    <sc-if value="{{ stepIs4 }}" hint-placeholder-val="{{ false }}">
+      <div>
+        <h2 style="font-family:'Bebas Neue',sans-serif;font-size:32px;color:#060923;letter-spacing:1px;margin:0 0 4px">E. Objetivos e Expectativas</h2>
+        <p style="font-size:14px;color:#555;margin:0 0 24px;font-weight:300">Entender o que o prospect quer alcançar, o que já tentou e as expectativas.</p>
+
+        <div style="margin-bottom:24px">
+          <label style="display:block;font-weight:600;font-size:14px;color:#060923;margin-bottom:4px">Selecione até 3 resultados mais importantes com a estruturação <span style="color:#c00;margin-left:2px">*</span></label>
+          <div style="display:flex;flex-wrap:wrap;gap:10px 20px;margin-top:4px">
+            <sc-for list="{{ expectedOutcomesOptions }}" as="opt" hint-placeholder-count="11">
+              <label style="display:flex;align-items:center;gap:6px;font-weight:400;font-size:14px;color:#222;cursor:pointer">
+                <input type="checkbox" checked="{{ opt.checked }}" onChange="{{ opt.onChange }}" style="accent-color:#AE8A56;width:16px;height:16px" /> {{ opt.label }}
+                <sc-if value="{{ opt.hasText }}" hint-placeholder-val="{{ false }}">
+                  <input type="text" value="{{ opt.textValue }}" onChange="{{ opt.onTextChange }}" placeholder="Especifique" style="width:140px;padding:4px 8px;border:1px solid #ddd;border-radius:4px;margin-left:4px" />
+                </sc-if>
+              </label>
+            </sc-for>
+          </div>
+          <div style="background:#f0f0f0;border-radius:6px;padding:6px 12px;font-size:12px;color:#555;margin-top:4px;font-style:italic">Máximo 3 opções.</div>
+        </div>
+
+        <div style="margin-bottom:24px">
+          <label style="display:block;font-weight:600;font-size:14px;color:#060923;margin-bottom:4px">Já tentaram resolver esses desafios antes? Se sim, o que foi feito e o que aconteceu?</label>
+          <textarea rows="2" value="{{ form.previous_attempts }}" onChange="{{ f.previous_attempts }}" placeholder="Descreva experiências anteriores..." style="width:100%;padding:10px 14px;border:1px solid #ddd;border-radius:8px;font-size:14px;background:#FCFCFC;color:#0A0A0A;resize:vertical;min-height:80px"></textarea>
+        </div>
+
+        <div style="margin-bottom:24px">
+          <label style="display:block;font-weight:600;font-size:14px;color:#060923;margin-bottom:4px">Horizonte de tempo para começar a ver resultados <span style="color:#c00;margin-left:2px">*</span></label>
+          <select value="{{ form.result_timeline_expectation }}" onChange="{{ f.result_timeline_expectation }}" style="width:100%;padding:10px 14px;border:1px solid #ddd;border-radius:8px;font-size:14px;background:#FCFCFC;color:#0A0A0A">
+            <option value="">Selecione...</option>
+            <option value="30 a 60 dias">Precisamos de resultado em 30 a 60 dias</option>
+            <option value="3 a 6 meses">Médio prazo, entre 3 e 6 meses</option>
+            <option value="6 a 12 meses">Entendemos que estruturação leva tempo — 6 a 12 meses</option>
+            <option value="Sem prazo definido">Sem prazo definido, queremos fazer certo</option>
+          </select>
+        </div>
+
+        <div style="margin-bottom:24px">
+          <label style="display:block;font-weight:600;font-size:14px;color:#060923;margin-bottom:4px">Há pessoas internas disponíveis para absorver e implementar a estruturação? <span style="color:#c00;margin-left:2px">*</span></label>
+          <select value="{{ form.internal_capacity }}" onChange="{{ f.internal_capacity }}" style="width:100%;padding:10px 14px;border:1px solid #ddd;border-radius:8px;font-size:14px;background:#FCFCFC;color:#0A0A0A">
+            <option value="">Selecione...</option>
+            <option value="Não, time muito ocupado">Não, o time está muito ocupado com a operação atual</option>
+            <option value="Capacidade limitada, mas possível">Temos capacidade limitada, mas é possível com organização</option>
+            <option value="Sim, pessoas com disponibilidade dedicada">Sim, temos pessoas com disponibilidade dedicada</option>
+          </select>
+        </div>
+
+        <div style="display:flex;justify-content:space-between;margin-top:32px;padding-top:20px;border-top:1px solid rgba(174,138,86,0.2)">
+          <button type="button" onClick="{{ prevStep }}" style="padding:10px 28px;border:none;border-radius:30px;font-weight:600;font-size:14px;cursor:pointer;background:#060923;color:#FCFCFC">← Voltar</button>
+          <button type="button" onClick="{{ nextStep }}" style="padding:10px 28px;border:none;border-radius:30px;font-weight:600;font-size:14px;cursor:pointer;background:#AE8A56;color:#FCFCFC">Próximo →</button>
+        </div>
+      </div>
+    </sc-if>
+
+    <!-- STEP 5 -->
+    <sc-if value="{{ stepIs5 }}" hint-placeholder-val="{{ false }}">
+      <div>
+        <h2 style="font-family:'Bebas Neue',sans-serif;font-size:32px;color:#060923;letter-spacing:1px;margin:0 0 4px">F. Contexto de Decisão</h2>
+        <p style="font-size:14px;color:#555;margin:0 0 24px;font-weight:300">Sobre o processo de decisão, orçamento e prazos.</p>
+
+        <div style="margin-bottom:24px">
+          <label style="display:block;font-weight:600;font-size:14px;color:#060923;margin-bottom:4px">Além de você, quem mais estará envolvido na decisão? <span style="color:#c00;margin-left:2px">*</span></label>
+          <div style="display:flex;flex-wrap:wrap;gap:10px 20px;margin-top:4px">
+            <sc-for list="{{ decisionStakeholdersOptions }}" as="opt" hint-placeholder-count="5">
+              <label style="display:flex;align-items:center;gap:6px;font-weight:400;font-size:14px;color:#222;cursor:pointer">
+                <input type="checkbox" checked="{{ opt.checked }}" onChange="{{ opt.onChange }}" style="accent-color:#AE8A56;width:16px;height:16px" /> {{ opt.label }}
+                <sc-if value="{{ opt.hasText }}" hint-placeholder-val="{{ false }}">
+                  <input type="text" value="{{ opt.textValue }}" onChange="{{ opt.onTextChange }}" placeholder="Especifique" style="width:120px;padding:4px 8px;border:1px solid #ddd;border-radius:4px;margin-left:4px" />
+                </sc-if>
+              </label>
+            </sc-for>
+          </div>
+        </div>
+
+        <div style="margin-bottom:24px">
+          <label style="display:block;font-weight:600;font-size:14px;color:#060923;margin-bottom:4px">Existe orçamento reservado ou previsto para estruturação comercial este ano? <span style="color:#c00;margin-left:2px">*</span></label>
+          <select value="{{ form.budget_availability }}" onChange="{{ f.budget_availability }}" style="width:100%;padding:10px 14px;border:1px solid #ddd;border-radius:8px;font-size:14px;background:#FCFCFC;color:#0A0A0A">
+            <option value="">Selecione...</option>
+            <option value="Sim, já temos verba separada">Sim, já temos verba separada para isso</option>
+            <option value="Não formalmente, mas há espaço">Não formalmente, mas há espaço para alocar</option>
+            <option value="Ainda não definimos, depende da proposta">Ainda não definimos, depende do que a proposta apresentar</option>
+            <option value="Orçamento é restrição relevante">Orçamento é uma restrição relevante no momento</option>
+          </select>
+        </div>
+
+        <div style="margin-bottom:24px">
+          <label style="display:block;font-weight:600;font-size:14px;color:#060923;margin-bottom:4px">Existe algum prazo ou evento que cria urgência para essa decisão?</label>
+          <input type="text" value="{{ form.decision_urgency }}" onChange="{{ f.decision_urgency }}" placeholder="Ex: perda de vendedor, meta anual, novo investimento..." style="width:100%;padding:10px 14px;border:1px solid #ddd;border-radius:8px;font-size:14px;background:#FCFCFC;color:#0A0A0A" />
+        </div>
+
+        <div style="margin-bottom:24px">
+          <label style="display:block;font-weight:600;font-size:14px;color:#060923;margin-bottom:4px">Estão avaliando outras empresas ou soluções para esse mesmo desafio? <span style="color:#c00;margin-left:2px">*</span></label>
+          <select value="{{ form.competitive_evaluation }}" onChange="{{ f.competitive_evaluation }}" style="width:100%;padding:10px 14px;border:1px solid #ddd;border-radius:8px;font-size:14px;background:#FCFCFC;color:#0A0A0A">
+            <option value="">Selecione...</option>
+            <option value="Não, viemos direto para a Veross">Não, viemos direto para a Veross</option>
+            <option value="Estamos conversando com outros fornecedores">Estamos conversando com outros fornecedores</option>
+            <option value="Ainda não iniciamos outras conversas, mas vamos avaliar">Ainda não iniciamos outras conversas, mas vamos avaliar</option>
+          </select>
+        </div>
+
+        <sc-if value="{{ submitError }}" hint-placeholder-val="{{ false }}">
+          <div style="background:rgba(200,0,0,0.06);border-left:4px solid #c00;padding:10px 16px;border-radius:6px;margin:16px 0;font-size:13px;color:#900">{{ submitError }}</div>
+        </sc-if>
+
+        <div style="display:flex;justify-content:space-between;margin-top:32px;padding-top:20px;border-top:1px solid rgba(174,138,86,0.2)">
+          <button type="button" onClick="{{ prevStep }}" style="padding:10px 28px;border:none;border-radius:30px;font-weight:600;font-size:14px;cursor:pointer;background:#060923;color:#FCFCFC">← Voltar</button>
+          <button type="button" onClick="{{ submit }}" disabled="{{ submitting }}" style="padding:10px 28px;border:none;border-radius:30px;font-weight:600;font-size:14px;cursor:pointer;background:#2a7a5a;color:white;opacity:{{ submitOpacity }}">{{ submitLabel }}</button>
+        </div>
+      </div>
+    </sc-if>
+
+  </div>
+  </sc-if>
+
+  <!-- RESULT AREA -->
+  <sc-if value="{{ submitted }}" hint-placeholder-val="{{ false }}">
+    <div style="padding:0 40px 48px;text-align:center">
+      <div style="width:56px;height:56px;border-radius:50%;background:#e8f3ee;color:#2a7a5a;display:flex;align-items:center;justify-content:center;font-size:28px;margin:32px auto 16px">✓</div>
+      <h3 style="font-family:'Bebas Neue',sans-serif;color:#060923;font-size:28px;letter-spacing:1px;margin:0 0 8px">Obrigado por compartilhar!</h3>
+      <p style="color:#555;max-width:440px;margin:0 auto">Recebemos suas respostas. Nossa equipe vai analisar o seu momento comercial e entrar em contato em breve para os próximos passos.</p>
+    </div>
+  </sc-if>
+
+  <div style="text-align:center;margin-top:0;font-size:12px;color:#CDCDD0;letter-spacing:2px;border-top:1px solid rgba(174,138,86,0.15);padding:20px 40px">
+    <span style="color:#AE8A56">VEROSS</span> · Diagnóstico de Maturidade Comercial
+  </div>
+
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+const N8N_WEBHOOK_URL = 'https://webhook.veross.com.br/webhook/diagnostics-prospects';
+
+const STEP_LABELS = ['Contexto', 'Situação', 'Time', 'Sintomas', 'Objetivos', 'Decisão'];
+
+const CLIENT_SIZE_DEFS = [
+  { value: 'Microempresas', label: 'Microempresas (até 9 colab.)' },
+  { value: 'Pequenas empresas', label: 'Pequenas (10 a 49)' },
+  { value: 'Médias empresas', label: 'Médias (50 a 299)' },
+  { value: 'Grandes empresas', label: 'Grandes (300+)' },
+  { value: 'Varia muito', label: 'Varia muito, não temos perfil definido' }
+];
+
+const LEAD_SOURCE_DEFS = [
+  { value: 'Indicação de clientes', label: 'Indicação de clientes' },
+  { value: 'Indicação de parceiros', label: 'Indicação de parceiros' },
+  { value: 'Prospecção ativa estruturada', label: 'Prospecção ativa estruturada' },
+  { value: 'Inbound', label: 'Inbound (site, SEO, redes)' },
+  { value: 'Eventos e networking', label: 'Eventos e networking' },
+  { value: 'Re-prospecção da base', label: 'Re-prospecção da base' },
+  { value: 'Outro', label: 'Outro:', hasText: true, textField: 'outro_lead_source' }
+];
+
+const TECH_STACK_DEFS = [
+  { value: 'CRM', label: 'CRM —', hasText: true, textField: 'outro_tech_crm', textPlaceholder: 'Nome do CRM' },
+  { value: 'Inteligência comercial', label: 'Ferramenta de inteligência (Apollo, Sales Nav...)' },
+  { value: 'Automação de cadências', label: 'Automação de cadências (MeeTime, Outreach...)' },
+  { value: 'WhatsApp não estruturado', label: 'WhatsApp não estruturado' },
+  { value: 'WhatsApp Business API', label: 'WhatsApp Business API / Evolution API' },
+  { value: 'Planilhas', label: 'Planilhas (Excel/Sheets)' },
+  { value: 'Nenhuma', label: 'Nenhuma específica' },
+  { value: 'Outro', label: 'Outro:', hasText: true, textField: 'outro_tech_outro', textPlaceholder: 'Especifique' }
+];
+
+const EXPECTED_OUTCOMES_DEFS = [
+  { value: 'Reduzir a dependência do sócio', label: 'Reduzir a dependência do sócio/dono' },
+  { value: 'Criar previsibilidade de receita', label: 'Criar previsibilidade de receita e pipeline' },
+  { value: 'Aumentar volume de oportunidades', label: 'Aumentar o volume de oportunidades geradas ativamente' },
+  { value: 'Melhorar taxa de conversão', label: 'Melhorar a taxa de conversão de propostas' },
+  { value: 'Estruturar time autônomo', label: 'Estruturar um time que funcione com autonomia' },
+  { value: 'Organizar pré-vendas (SDR)', label: 'Implantar ou organizar o processo de pré-vendas (SDR)' },
+  { value: 'Definir ICP e estratégia', label: 'Definir ICP e estratégia de prospecção' },
+  { value: 'Implementar/reorganizar CRM', label: 'Implementar ou reorganizar o CRM' },
+  { value: 'Capacitar time em método', label: 'Capacitar o time em método e habilidades de venda' },
+  { value: 'Escalar operação com qualidade', label: 'Escalar a operação sem perder qualidade ou controle' },
+  { value: 'Outro', label: 'Outro:', hasText: true, textField: 'outro_expected' }
+];
+
+const DECISION_STAKEHOLDERS_DEFS = [
+  { value: 'Só eu decido', label: 'Só eu decido' },
+  { value: 'Sócio precisa ser alinhado', label: 'Sócio ou co-fundador' },
+  { value: 'Diretor financeiro/CFO', label: 'Diretor financeiro ou CFO' },
+  { value: 'Conselho/investidores', label: 'Conselho, investidores ou board' },
+  { value: 'Outro', label: 'Outro:', hasText: true, textField: 'outro_decision' }
+];
+
+const SKILLS_DEFS = [
+  { key: 'skill_prospeccao', label: 'Prospecção e geração de leads' },
+  { key: 'skill_qualificacao', label: 'Qualificação de oportunidades' },
+  { key: 'skill_reunioes', label: 'Condução de reuniões e apresentações' },
+  { key: 'skill_negociacao', label: 'Negociação e fechamento' },
+  { key: 'skill_ferramentas', label: 'Gestão e uso de ferramentas / CRM' }
+];
+
+const SYMPTOMS_DEFS = [
+  { key: 'symptom_indicacao', label: 'Dependemos mais de indicação do que de prospecção ativa para crescer' },
+  { key: 'symptom_previsibilidade', label: 'Não sabemos com precisão quanto vamos fechar nos próximos 30 a 60 dias' },
+  { key: 'symptom_dono', label: 'O sócio ou dono ainda precisa estar presente para a maioria das negociações fecharem' },
+  { key: 'symptom_prospeccao', label: 'Temos vendedores, mas a prospecção ativa é inconsistente ou quase inexistente' },
+  { key: 'symptom_padronizacao', label: 'Cada pessoa vende do seu jeito, sem padronização de processo ou abordagem' },
+  { key: 'symptom_travou', label: 'Crescemos até aqui, mas sentimos que a operação travou ou desacelerou' },
+  { key: 'symptom_medicao', label: 'Não conseguimos medir com clareza o que está funcionando e o que está travando as vendas' },
+  { key: 'symptom_crm', label: 'Temos CRM ou ferramentas, mas elas não refletem a realidade ou são subutilizadas' },
+  { key: 'symptom_perda', label: 'Quando perdemos uma oportunidade ou cliente, raramente sabemos o motivo real' },
+  { key: 'symptom_dependencia', label: 'Se um bom vendedor sair, teríamos um problema sério de receita' }
+];
+
+const SIMPLE_FIELDS = [
+  'company_name','contact_name','contact_role','contact_email','contact_whatsapp','company_website','company_linkedin',
+  'business_description','revenue_model','buyer_persona','avg_ticket_range','company_market_time',
+  'outbound_maturity','owner_dependency','pipeline_predictability','crm_usage_quality',
+  'team_owners','team_closers','team_sdrs','team_assistants','team_managers',
+  'presales_sales_split','team_training_model','management_routine','onboarding_process',
+  'main_pain_point','additional_pain_points',
+  'previous_attempts','result_timeline_expectation','internal_capacity',
+  'budget_availability','decision_urgency','competitive_evaluation',
+  'outro_lead_source','outro_tech_crm','outro_tech_outro','outro_expected','outro_decision'
+];
+
+const REQUIRED_BY_STEP = {
+  0: ['company_name','contact_name','contact_role','contact_email','business_description','revenue_model','buyer_persona','avg_ticket_range','company_market_time'],
+  1: ['outbound_maturity','owner_dependency','pipeline_predictability'],
+  2: ['presales_sales_split','team_training_model','management_routine','onboarding_process'],
+  3: ['main_pain_point'],
+  4: ['result_timeline_expectation','internal_capacity'],
+  5: ['budget_availability','competitive_evaluation']
+};
+
+const CHECKBOX_MIN_BY_STEP = { 0: 'client_company_size', 1: 'lead_sources_current' };
+
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    const form = {};
+    SIMPLE_FIELDS.forEach(k => { form[k] = ''; });
+    form.status = 'Em andamento';
+    form.team_owners = 0; form.team_closers = 0; form.team_sdrs = 0; form.team_assistants = 0; form.team_managers = 0;
+    form.client_company_size = [];
+    form.lead_sources_current = [];
+    form.tech_stack_current = [];
+    form.expected_outcomes = [];
+    form.decision_stakeholders = [];
+    SKILLS_DEFS.forEach(s => { form[s.key] = null; });
+    SYMPTOMS_DEFS.forEach(s => { form[s.key] = null; });
+
+    this.state = {
+      step: 0,
+      form,
+      stepError: '',
+      submitting: false,
+      submitError: '',
+      submitted: false,
+      resultJson: '',
+      diagId: 'auto-' + Date.now()
+    };
+
+    this._fieldHandlers = {};
+    SIMPLE_FIELDS.forEach(name => {
+      this._fieldHandlers[name] = (e) => {
+        const v = e && e.target ? e.target.value : e;
+        this.setState(s => ({ form: { ...s.form, [name]: v } }));
+      };
+    });
+  }
+
+  setField(name, value) {
+    this.setState(s => ({ form: { ...s.form, [name]: value } }));
+  }
+
+  toggleCheckbox(group, value, max) {
+    this.setState(s => {
+      const cur = s.form[group] || [];
+      let next;
+      if (cur.includes(value)) {
+        next = cur.filter(v => v !== value);
+      } else {
+        if (max && cur.length >= max) {
+          window.alert('Selecione no máximo ' + max + ' opções.');
+          return null;
+        }
+        next = [...cur, value];
+      }
+      return { form: { ...s.form, [group]: next } };
+    });
+  }
+
+  setScale(key, n) {
+    this.setState(s => ({ form: { ...s.form, [key]: n } }));
+  }
+
+  buildOptionArray(defs, group, max) {
+    const selected = this.state.form[group] || [];
+    return defs.map(d => ({
+      value: d.value,
+      label: d.label,
+      checked: selected.includes(d.value),
+      onChange: () => this.toggleCheckbox(group, d.value, max),
+      hasText: !!d.hasText,
+      textValue: d.hasText ? (this.state.form[d.textField] || '') : '',
+      textPlaceholder: d.textPlaceholder || 'Especifique',
+      onTextChange: d.hasText ? (e) => this.setField(d.textField, e.target.value) : null
+    }));
+  }
+
+  buildScaleList(defs) {
+    return defs.map(d => ({
+      key: d.key,
+      label: d.label,
+      options: [1, 2, 3, 4, 5].map(n => ({
+        n,
+        checked: this.state.form[d.key] === n,
+        onChange: () => this.setScale(d.key, n)
+      }))
+    }));
+  }
+
+  goToStep(idx) {
+    if (idx < 0 || idx > 5) return;
+    if (idx > this.state.step) {
+      const err = this.validateStep(this.state.step);
+      if (err) {
+        this.setState({ stepError: err });
+        return;
+      }
+    }
+    this.setState({ step: idx, stepError: '' });
+  }
+
+  validateStep(stepIdx) {
+    const form = this.state.form;
+    const required = REQUIRED_BY_STEP[stepIdx] || [];
+    for (const name of required) {
+      const v = form[name];
+      if (v === null || v === undefined || (typeof v === 'string' && v.trim() === '')) {
+        return 'Preencha todos os campos obrigatórios antes de avançar.';
+      }
+    }
+    const minGroup = CHECKBOX_MIN_BY_STEP[stepIdx];
+    if (minGroup && (form[minGroup] || []).length === 0) {
+      return 'Preencha todos os campos obrigatórios antes de avançar.';
+    }
+    return '';
+  }
+
+  nextStep() { this.goToStep(this.state.step + 1); }
+  prevStep() { this.goToStep(this.state.step - 1); }
+
+  resolveCheckboxValues(group, defs) {
+    const selected = this.state.form[group] || [];
+    return selected.map(v => {
+      const def = defs.find(d => d.value === v);
+      if (def && def.hasText) {
+        const txt = (this.state.form[def.textField] || '').trim();
+        return txt ? (v === 'CRM' ? ('CRM: ' + txt) : (v + ': ' + txt)) : v;
+      }
+      return v;
+    });
+  }
+
+  buildPayload() {
+    const form = this.state.form;
+    const payload = {
+      diag_id: this.state.diagId,
+      status: 'Recebido',
+      company_name: form.company_name,
+      contact_name: form.contact_name,
+      contact_role: form.contact_role,
+      contact_email: form.contact_email,
+      contact_whatsapp: form.contact_whatsapp,
+      company_website: form.company_website,
+      company_linkedin: form.company_linkedin,
+      business_description: form.business_description,
+      revenue_model: form.revenue_model,
+      client_company_size: form.client_company_size,
+      buyer_persona: form.buyer_persona,
+      avg_ticket_range: form.avg_ticket_range,
+      company_market_time: form.company_market_time,
+      lead_sources_current: this.resolveCheckboxValues('lead_sources_current', LEAD_SOURCE_DEFS),
+      outbound_maturity: form.outbound_maturity,
+      owner_dependency: form.owner_dependency,
+      pipeline_predictability: form.pipeline_predictability,
+      tech_stack_current: this.resolveCheckboxValues('tech_stack_current', TECH_STACK_DEFS),
+      crm_usage_quality: form.crm_usage_quality,
+      team_composition: {
+        owners: parseInt(form.team_owners) || 0,
+        closers: parseInt(form.team_closers) || 0,
+        sdrs: parseInt(form.team_sdrs) || 0,
+        assistants: parseInt(form.team_assistants) || 0,
+        managers: parseInt(form.team_managers) || 0
+      },
+      presales_sales_split: form.presales_sales_split,
+      team_training_model: form.team_training_model,
+      skills_assessment: {
+        prospeccao: form.skill_prospeccao,
+        qualificacao: form.skill_qualificacao,
+        reunioes: form.skill_reunioes,
+        negociacao: form.skill_negociacao,
+        ferramentas: form.skill_ferramentas
+      },
+      management_routine: form.management_routine,
+      onboarding_process: form.onboarding_process,
+      symptoms_assessment: {
+        indicacao: form.symptom_indicacao,
+        previsibilidade: form.symptom_previsibilidade,
+        dono: form.symptom_dono,
+        prospeccao: form.symptom_prospeccao,
+        padronizacao: form.symptom_padronizacao,
+        travou: form.symptom_travou,
+        medicao: form.symptom_medicao,
+        crm: form.symptom_crm,
+        perda: form.symptom_perda,
+        dependencia: form.symptom_dependencia
+      },
+      main_pain_point: form.main_pain_point,
+      additional_pain_points: form.additional_pain_points,
+      expected_outcomes: this.resolveCheckboxValues('expected_outcomes', EXPECTED_OUTCOMES_DEFS),
+      previous_attempts: form.previous_attempts,
+      result_timeline_expectation: form.result_timeline_expectation,
+      internal_capacity: form.internal_capacity,
+      decision_stakeholders: this.resolveCheckboxValues('decision_stakeholders', DECISION_STAKEHOLDERS_DEFS),
+      budget_availability: form.budget_availability,
+      decision_urgency: form.decision_urgency,
+      competitive_evaluation: form.competitive_evaluation
+    };
+    return payload;
+  }
+
+  async submit() {
+    const err = this.validateStep(this.state.step);
+    if (err) { this.setState({ stepError: err }); return; }
+    this.setState({ submitting: true, submitError: '' });
+    const payload = this.buildPayload();
+    try {
+      const res = await fetch(N8N_WEBHOOK_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      if (!res.ok) {
+        const text = await res.text();
+        throw new Error('Webhook respondeu ' + res.status + ': ' + text);
+      }
+      this.setState({ submitting: false, submitted: true, resultJson: JSON.stringify(payload, null, 2) });
+    } catch (e) {
+      this.setState({ submitting: false, submitError: 'Falha ao enviar: ' + e.message });
+    }
+  }
+
+  resetForm() {
+    window.location.reload();
+  }
+
+  renderVals() {
+    const s = this.state;
+    const step = s.step;
+
+    const stepChrome = STEP_LABELS.map((label, i) => {
+      let circleBg = '#CDCDD0', circleColor = '#FCFCFC', textColor = '#CDCDD0';
+      if (i === step) { circleBg = '#AE8A56'; circleColor = '#FCFCFC'; textColor = '#060923'; }
+      else if (i < step) { circleBg = '#060923'; circleColor = '#AE8A56'; textColor = '#060923'; }
+      return { n: i + 1, label, circleBg, circleColor, textColor };
+    });
+
+    const crmChecked = (s.form.tech_stack_current || []).includes('CRM');
+
+    return {
+      form: s.form,
+      f: this._fieldHandlers,
+      diagId: s.diagId,
+      notSubmitted: !s.submitted,
+      submitted: s.submitted,
+      resultJson: s.resultJson,
+      stepError: s.stepError,
+      submitError: s.submitError,
+      submitting: s.submitting,
+      submitLabel: s.submitting ? 'Enviando...' : '📤 Finalizar e Enviar',
+      submitOpacity: s.submitting ? 0.6 : 1,
+      progressPct: ((step / 5) * 100) + '%',
+      stepChrome,
+      stepIs0: step === 0, stepIs1: step === 1, stepIs2: step === 2, stepIs3: step === 3,
+      stepIs4: step === 4, stepIs5: step === 5,
+      crmChecked,
+      clientSizeOptions: this.buildOptionArray(CLIENT_SIZE_DEFS, 'client_company_size'),
+      leadSourceOptions: this.buildOptionArray(LEAD_SOURCE_DEFS, 'lead_sources_current'),
+      techStackOptions: this.buildOptionArray(TECH_STACK_DEFS, 'tech_stack_current'),
+      expectedOutcomesOptions: this.buildOptionArray(EXPECTED_OUTCOMES_DEFS, 'expected_outcomes', 3),
+      decisionStakeholdersOptions: this.buildOptionArray(DECISION_STAKEHOLDERS_DEFS, 'decision_stakeholders'),
+      skillsList: this.buildScaleList(SKILLS_DEFS),
+      symptomsList: this.buildScaleList(SYMPTOMS_DEFS),
+      nextStep: () => this.nextStep(),
+      prevStep: () => this.prevStep(),
+      submit: () => this.submit(),
+      resetForm: () => this.resetForm()
+    };
+  }
+}
+</script>
+</body>
+</html>

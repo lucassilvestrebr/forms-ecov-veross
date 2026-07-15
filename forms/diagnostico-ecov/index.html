@@ -3,891 +3,1325 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ECOV — Formulário de Diagnóstico Comercial</title>
+<title>Diagnóstico ECOV — Veross</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,300;1,9..40,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-  :root{
-    --azul:#060923;
-    --azul-2:#0d1230;
-    --dourado:#AE8A56;
-    --dourado-soft:#e9dcc7;
-    --bg:#f7f5f1;
-    --card:#ffffff;
-    --text:#1c1e2e;
-    --muted:#6b6f85;
-    --border:#e3e0d8;
-    --radius:10px;
-  }
-  *{box-sizing:border-box;}
-  body{
-    margin:0;
-    font-family:'Georgia', 'Times New Roman', serif;
-    background:var(--bg);
-    color:var(--text);
-    line-height:1.55;
-  }
-  .topbar{
-    background:var(--azul);
-    color:#fff;
-    padding:36px 24px;
-    text-align:center;
-  }
-  .topbar .eyebrow{
-    font-family:'Helvetica Neue', Arial, sans-serif;
-    letter-spacing:.25em;
-    font-size:11px;
-    text-transform:uppercase;
-    color:var(--dourado);
-    margin-bottom:10px;
-  }
-  .topbar h1{
-    margin:0;
-    font-size:28px;
-    font-weight:400;
-    letter-spacing:.02em;
-  }
-  .topbar p{
-    font-family:'Helvetica Neue', Arial, sans-serif;
-    color:#c9cad8;
-    font-size:14px;
-    max-width:620px;
-    margin:14px auto 0;
-  }
-  .wrap{
-    max-width:760px;
-    margin:0 auto;
-    padding:32px 20px 80px;
-  }
-  .intro-card{
-    background:var(--card);
-    border:1px solid var(--border);
-    border-left:4px solid var(--dourado);
-    border-radius:var(--radius);
-    padding:20px 24px;
-    margin-bottom:32px;
-    font-family:'Helvetica Neue', Arial, sans-serif;
-    font-size:14px;
-    color:var(--muted);
-  }
-  .intro-card strong{color:var(--text);}
-  .section{
-    background:var(--card);
-    border:1px solid var(--border);
-    border-radius:var(--radius);
-    margin-bottom:20px;
-    overflow:hidden;
-  }
-  .section-header{
-    display:flex;
-    align-items:baseline;
-    gap:14px;
-    padding:18px 24px;
-    background:var(--azul);
-    color:#fff;
-  }
-  .section-header .num{
-    font-family:'Helvetica Neue', Arial, sans-serif;
-    font-size:12px;
-    letter-spacing:.15em;
-    color:var(--dourado);
-    border:1px solid var(--dourado);
-    border-radius:50%;
-    width:26px;
-    height:26px;
-    min-width:26px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-  }
-  .section-header h2{
-    margin:0;
-    font-size:17px;
-    font-weight:400;
-  }
-  .section-body{
-    padding:22px 24px 8px;
-  }
-  .field{
-    margin-bottom:20px;
-  }
-  label{
-    display:block;
-    font-family:'Helvetica Neue', Arial, sans-serif;
-    font-size:13.5px;
-    font-weight:600;
-    color:var(--text);
-    margin-bottom:6px;
-  }
-  .hint{
-    font-family:'Helvetica Neue', Arial, sans-serif;
-    font-size:12px;
-    color:var(--muted);
-    margin:-2px 0 8px;
-    font-style:italic;
-  }
-  input[type=text], input[type=email], input[type=tel], input[type=number], textarea, select{
-    width:100%;
-    padding:10px 12px;
-    border:1px solid var(--border);
-    border-radius:6px;
-    font-family:'Helvetica Neue', Arial, sans-serif;
-    font-size:14px;
-    color:var(--text);
-    background:#fdfcfa;
-    transition:border-color .15s;
-  }
-  input:focus, textarea:focus, select:focus{
-    outline:none;
-    border-color:var(--dourado);
-  }
-  textarea{resize:vertical; min-height:70px;}
-  .row2{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:16px;
-  }
-  @media (max-width:600px){
-    .row2{grid-template-columns:1fr;}
-  }
-  .radio-group, .check-group{
-    display:flex;
-    flex-direction:column;
-    gap:8px;
-    font-family:'Helvetica Neue', Arial, sans-serif;
-    font-size:14px;
-  }
-  .radio-group label, .check-group label{
-    display:flex;
-    align-items:center;
-    gap:8px;
-    font-weight:400;
-    margin:0;
-    cursor:pointer;
-  }
-  .radio-group input, .check-group input{
-    width:auto;
-    accent-color:var(--dourado);
-  }
-  .ack{
-    background:var(--dourado-soft);
-    border:1px solid var(--dourado);
-    border-radius:8px;
-    padding:14px 16px;
-    margin-bottom:14px;
-  }
-  .ack label{
-    display:flex;
-    align-items:flex-start;
-    gap:10px;
-    font-weight:400;
-    cursor:pointer;
-  }
-  .ack input{margin-top:3px; width:auto; accent-color:var(--dourado);}
-  .submit-bar{
-    text-align:center;
-    margin-top:36px;
-  }
-  .submit-bar button{
-    font-family:'Helvetica Neue', Arial, sans-serif;
-    background:var(--azul);
-    color:#fff;
-    border:none;
-    padding:14px 40px;
-    font-size:14px;
-    letter-spacing:.08em;
-    text-transform:uppercase;
-    border-radius:6px;
-    cursor:pointer;
-  }
-  .submit-bar p{
-    font-family:'Helvetica Neue', Arial, sans-serif;
-    font-size:12px;
-    color:var(--muted);
-    margin-top:10px;
-  }
-  .draft-note{
-    text-align:center;
-    font-family:'Helvetica Neue', Arial, sans-serif;
-    font-size:12px;
-    color:var(--dourado);
-    letter-spacing:.1em;
-    text-transform:uppercase;
-    margin-bottom:18px;
-  }
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html,body{height:100%;overflow:hidden;background:#060923;font-family:'DM Sans','Segoe UI',Arial,sans-serif;color:#FCFCFC;}
+/* Texto visível por padrão nos slides escuros */
+#slide-0,#slide-3,#slide-5,#slide-7,#slide-9,#slide-11,
+#slide-13,#slide-15,#slide-17,#slide-19,#slide-21,#slide-23,
+#slide-25,#slide-27{color:#ECD7B4;font-family:'DM Sans','Segoe UI',Arial,sans-serif;}
+#container{position:relative;overflow:hidden;width:100%;height:100vh;}
+.slide{position:absolute;top:0;left:0;width:100%;height:100%;overflow-y:auto;opacity:0;pointer-events:none;}
+#slide-0{opacity:1;pointer-events:auto;}
+.slide::-webkit-scrollbar{width:4px;}
+.slide::-webkit-scrollbar-thumb{background:rgba(174,138,86,.4);border-radius:2px;}
+input[type=text],input[type=email],input[type=tel],input[type=number],textarea,select{
+  display:block;width:100%;padding:7px 10px;border:1.5px solid #e0ddd6;border-radius:6px;
+  font-family:'DM Sans',sans-serif;font-size:13px;color:#1c1e2e;background:#fdfdfa;
+  transition:border-color .2s,box-shadow .2s;outline:none;-webkit-appearance:none;appearance:none;}
+input:focus,textarea:focus,select:focus{border-color:#AE8A56;box-shadow:0 0 0 3px rgba(174,138,86,.12);}
+textarea{resize:vertical;min-height:52px;font-family:'DM Sans',sans-serif;}
+input[type=radio],input[type=checkbox]{accent-color:#AE8A56;width:17px;height:17px;cursor:pointer;flex-shrink:0;margin:0;}
+button{cursor:pointer;font-family:'DM Sans',sans-serif;}
+button:active{transform:scale(.98);}
+#pbar{position:fixed;top:0;left:0;right:0;height:3px;background:rgba(255,255,255,.07);z-index:9999;pointer-events:none;}
+#pfill{height:100%;background:#AE8A56;width:0%;transition:width .4s ease;}
+.lbl{display:block;font-size:12px;font-weight:600;color:#1c1e2e;margin-bottom:2px;}
+.hint{font-size:11px;color:#6b6f85;margin-bottom:3px;font-style:italic;line-height:1.4;}
+.field{margin-bottom:9px;}
+.row2{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:9px;}
+.row2 .field{flex:1;min-width:200px;margin-bottom:0;}
+.radio-col{display:flex;flex-direction:column;gap:5px;}
+.radio-col label,.check-col label{display:flex;align-items:flex-start;gap:6px;font-size:13px;color:#1c1e2e;font-weight:400;cursor:pointer;line-height:1.35;}
+.check-col{display:flex;flex-direction:column;gap:5px;}
+.radio-col label input,.check-col label input{margin-top:2px;}
+.ack-item{display:flex;align-items:flex-start;gap:8px;padding:9px 13px;background:#f7f5f1;border-radius:8px;border:1.5px solid #e3e0d8;cursor:pointer;margin-bottom:6px;}
+.ack-item span{font-size:13px;color:#1c1e2e;line-height:1.5;}
+.stickybar{background:#060923;padding:9px 20px;display:flex;align-items:center;gap:10px;position:sticky;top:0;z-index:100;}
+.snum{width:28px;height:28px;border-radius:50%;border:1.5px solid #AE8A56;display:flex;align-items:center;justify-content:center;font-family:'DM Mono',monospace;font-size:10px;color:#AE8A56;flex-shrink:0;}
+.stitle{font-family:'Bebas Neue',sans-serif;font-size:18px;color:#FCFCFC!important;letter-spacing:2px;flex:1;}
+.btn-back{background:none;border:none;color:#AE8A56;font-size:13px;font-weight:500;display:flex;align-items:center;gap:5px;padding:0;}
+.btn-dark{display:inline-flex;align-items:center;gap:8px;padding:10px 22px;background:#060923;color:#FCFCFC;border:none;font-weight:600;font-size:12px;letter-spacing:.07em;border-radius:8px;text-transform:uppercase;}
+.btn-outline{display:inline-flex;align-items:center;gap:9px;padding:13px 26px;background:transparent;border:1.5px solid #AE8A56;color:#FCFCFC;font-weight:600;font-size:13px;letter-spacing:.07em;border-radius:8px;text-transform:uppercase;}
+.btn-gold{display:inline-flex;align-items:center;gap:8px;padding:10px 22px;background:#AE8A56;border:none;color:#060923;font-weight:700;font-size:12px;letter-spacing:.07em;border-radius:8px;text-transform:uppercase;}
+.form-body{max-width:660px;margin:0 auto;padding:13px 22px 13px;}
+.form-foot{margin-top:12px;padding-top:11px;border-top:1px solid #e3e0d8;display:flex;justify-content:flex-end;}
+.cover-inner{position:relative;z-index:1;max-width:640px;}
+.cover-eyebrow{font-size:11px;letter-spacing:4px;text-transform:uppercase;color:#AE8A56!important;margin-bottom:14px;font-weight:500;}
+.cover-title{font-family:'Bebas Neue',sans-serif;letter-spacing:3px;line-height:.95;color:#FCFCFC!important;margin-bottom:24px;}
+.cover-div{width:48px;height:2px;background:#AE8A56;margin-bottom:22px;}
+.cover-desc{font-size:16px;line-height:1.8;color:#ECD7B4!important;border-left:3px solid #AE8A56;padding-left:20px;margin-bottom:26px;font-style:italic;}
+.cover-frase{padding:15px 19px;background:rgba(174,138,86,.1);border-radius:8px;border-left:2px solid rgba(174,138,86,.5);margin-bottom:38px;}
+.cover-frase p{font-size:13px;font-style:italic;color:#AE8A56!important;line-height:1.7;margin:0;}
+.cover-topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:34px;}
+@media(max-width:640px){
+  .form-body{padding:10px 12px 10px;}
+  .stickybar{padding:7px 12px;}
+}
+/* ── Validation error states ───────────────────────── */
+.f-err{border-color:#dc4a4a!important;box-shadow:0 0 0 3px rgba(220,74,74,.13)!important;background:#fff9f9!important;}
+.rg-err{outline:2px solid rgba(220,74,74,.35);outline-offset:6px;border-radius:8px;}
+@keyframes spin{to{transform:rotate(360deg)}}
+@media print{
+  *,*::before,*::after{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important;}
+  body{overflow:auto!important;}
+  #pbar{display:none!important;}
+  .slide{position:static!important;transform:none!important;opacity:1!important;pointer-events:auto!important;height:auto!important;min-height:auto!important;page-break-after:always;display:block!important;}
+  #container{overflow:visible!important;height:auto!important;position:static!important;}
+}
 
-  .submit-status{
-    font-family:'Helvetica Neue', Arial, sans-serif;
-    max-width:620px;
-    margin:14px auto 0;
-    padding:12px 14px;
-    border-radius:6px;
-    font-size:13px;
-    display:none;
-  }
-  .submit-status.ok{display:block; background:#eef7ef; color:#245b2a; border:1px solid #bcd9bf;}
-  .submit-status.error{display:block; background:#fff1f1; color:#8b1e1e; border:1px solid #e1b4b4;}
-  .submit-status.info{display:block; background:#f5f1e9; color:#594320; border:1px solid var(--dourado-soft);}
+/* ── SPLIT LAYOUT + BUILDING PANEL ──────────────────────────── */
+#app{display:flex;width:100%;height:100vh;overflow:hidden;}
+#form-panel{flex:0 0 52%;position:relative;height:100vh;overflow:hidden;}
+#pbar{position:absolute!important;}
+#building-panel{flex:1;background:#060923;height:100vh;overflow:hidden;display:flex;flex-direction:column;border-left:1px solid rgba(174,138,86,.1);}
+#bld-top{padding:26px 22px 0;flex-shrink:0;}
+#bld-eyebrow{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:3px;color:rgba(174,138,86,.38);text-transform:uppercase;margin-bottom:6px;}
+#bld-title{font-family:'Bebas Neue',sans-serif;font-size:19px;letter-spacing:2.5px;color:#FCFCFC;line-height:1.1;}
+#bld-status{font-size:11px;color:rgba(252,252,252,.22);margin-top:7px;font-style:italic;min-height:16px;transition:color .5s;}
+#svg-wrap{flex:1;display:flex;align-items:center;justify-content:center;padding:8px 12px 0;}
+#iso-svg{width:100%;height:100%;}
+#bld-bottom{padding:10px 22px 20px;flex-shrink:0;}
+.bld-legend{display:flex;flex-wrap:wrap;gap:5px 12px;}
+.bld-item{display:flex;align-items:center;gap:5px;opacity:.14;transition:opacity .5s;}
+.bld-item.on{opacity:1;}
+.bld-dot{width:5px;height:5px;border-radius:50%;background:#AE8A56;flex-shrink:0;}
+.bld-lbl{font-family:'DM Mono',monospace;font-size:7.5px;color:#AE8A56;letter-spacing:.4px;}
+#iso-svg.done{filter:drop-shadow(0 0 18px rgba(174,138,86,.28)) drop-shadow(0 0 5px rgba(174,138,86,.12));}
 
+
+@media(max-width:768px){
+  #app{flex-direction:column;}
+  #form-panel{flex:0 0 62%;height:62vh;}
+  #building-panel{flex:1;border-left:none;border-top:1px solid rgba(174,138,86,.1);}
+  #bld-top{padding:10px 16px 0;}
+  #bld-bottom{padding:4px 16px 8px;}
+}
 </style>
 </head>
 <body>
+<div id="app">
+<div id="form-panel">
+<div id="pbar"><div id="pfill"></div></div>
+<div id="container">
 
-<div class="topbar">
-  <div class="eyebrow">Veross · Ecossistema Comercial Veross</div>
-  <h1>Formulário de Diagnóstico — ECOV</h1>
-  <p>Este diagnóstico é a base de toda a estruturação da sua operação de prospecção. Reserve entre 45 e 60 minutos, busque informações reais (não estimativas "no chute") e responda com o máximo de detalhe possível — quanto mais precisas as respostas, mais precisa será a estratégia.</p>
+<!-- ═══ SLIDE 0: CAPA ═══ -->
+<div id="slide-0" class="slide" style="background:#060923;display:flex;flex-direction:column;justify-content:center;padding:48px 40px;position:relative;overflow:hidden;min-height:100vh;">
+  <div style="position:absolute;right:-6%;bottom:-18%;font-family:'Bebas Neue',sans-serif;font-size:52vw;color:rgba(174,138,86,.04);line-height:1;pointer-events:none;user-select:none;letter-spacing:-8px;">V</div>
+  <div style="position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#AE8A56,rgba(174,138,86,.1),transparent);"></div>
+  <div style="position:relative;z-index:1;max-width:760px;">
+    <div style="margin-bottom:56px;"><img src="../../assets/brand/logo-veross.svg" alt="Veross" style="height:52px;width:auto;filter:brightness(0) invert(1);opacity:.92;"></div>
+    <div class="cover-eyebrow">Formulário de Diagnóstico</div>
+    <div style="font-family:'Bebas Neue',sans-serif;font-size:clamp(52px,7.5vw,108px);color:#FCFCFC;letter-spacing:4px;line-height:.9;margin-bottom:4px;">DIAGNÓSTICO</div>
+    <div style="font-family:'Bebas Neue',sans-serif;font-size:clamp(68px,10vw,140px);color:#AE8A56;letter-spacing:4px;line-height:.9;margin-bottom:34px;">ECOV</div>
+    <div style="width:64px;height:1px;background:rgba(174,138,86,.4);margin-bottom:28px;"></div>
+    <p style="font-size:15px;line-height:1.85;color:rgba(252,252,252,.5);max-width:480px;margin-bottom:52px;font-style:italic;font-weight:300;">Este diagnóstico é a base de toda a estruturação da sua operação de prospecção. Reserve entre 45 e 60 minutos e responda com o máximo de detalhe possível.</p>
+    <button class="btn-outline" onclick="go(1)">Iniciar diagnóstico <span style="color:#AE8A56;font-size:18px;line-height:1;">→</span></button>
+  </div>
 </div>
 
-<div class="wrap">
-
-  <div class="draft-note">Versão 1 — Documento confidencial </div>
-
-  <div class="intro-card">
-    <strong>Antes de começar:</strong> se possível, reúna no momento de preencher: dados financeiros do último ano fechado e do ano corrente, acesso ao CRM (se houver), e uma lista mental dos seus 5 melhores clientes e 5 principais concorrentes. Isso evita interrupções no meio do formulário.
+<!-- ═══ SLIDE 1: INTRO ═══ -->
+<div id="slide-1" class="slide" style="background:#FCFCFC;min-height:100vh;">
+  <div class="stickybar" style="justify-content:space-between;padding:16px 40px;">
+    <img src="../../assets/brand/logo-veross.svg" alt="Veross" style="height:24px;width:auto;filter:brightness(0) invert(1);opacity:.85;">
+    <button class="btn-back" onclick="prev()">← Voltar</button>
   </div>
-
-  <!-- 1 -->
-  <div class="section">
-    <div class="section-header"><div class="num">1</div><h2>Identificação</h2></div>
-    <div class="section-body">
-      <div class="row2">
-        <div class="field"><label>Qual o seu nome?</label><input type="text"></div>
-        <div class="field"><label>Qual o seu cargo na empresa?</label><input type="text"></div>
+  <div class="form-body" style="max-width:720px;">
+    <div class="cover-eyebrow" style="color:#AE8A56;">Antes de começar</div>
+    <div style="font-family:'Bebas Neue',sans-serif;font-size:clamp(36px,5vw,60px);color:#060923;letter-spacing:2px;line-height:1;margin-bottom:24px;">O QUE É ESTE DIAGNÓSTICO</div>
+    <div style="width:48px;height:2px;background:#AE8A56;margin-bottom:28px;"></div>
+    <p style="font-size:16px;line-height:1.85;color:#2A2A2A;margin-bottom:22px;font-weight:300;">O Diagnóstico ECOV é o ponto de partida de toda a estruturação do seu ecossistema comercial. Ele nos permite entender, com profundidade e precisão, o cenário atual da sua operação — antes de qualquer recomendação ou ação estratégica.</p>
+    <p style="font-size:16px;line-height:1.85;color:#2A2A2A;margin-bottom:40px;font-weight:300;">Não é um questionário genérico. É um mapeamento cirúrgico da sua realidade — para que cada decisão tomada juntos seja baseada em dados reais, não em suposições.</p>
+    <div style="display:flex;flex-wrap:wrap;gap:14px;margin-bottom:40px;">
+      <div style="flex:1;min-width:170px;padding:22px;background:#f7f5f1;border-radius:10px;border-top:3px solid #AE8A56;">
+        <div style="font-size:10px;letter-spacing:3px;text-transform:uppercase;color:#AE8A56;margin-bottom:8px;font-weight:600;">Duração</div>
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:34px;color:#060923;letter-spacing:2px;margin-bottom:6px;">45–60 MIN</div>
+        <div style="font-size:13px;color:#6b6f85;line-height:1.6;">Reserve um momento tranquilo para preencher com atenção.</div>
       </div>
-      <div class="row2">
-        <div class="field"><label>Qual o seu e-mail?</label><input type="email"></div>
-        <div class="field"><label>Qual o seu telefone?</label><input type="tel"></div>
+      <div style="flex:1;min-width:170px;padding:22px;background:#f7f5f1;border-radius:10px;border-top:3px solid #AE8A56;">
+        <div style="font-size:10px;letter-spacing:3px;text-transform:uppercase;color:#AE8A56;margin-bottom:8px;font-weight:600;">Tenha em mãos</div>
+        <div style="font-size:13px;color:#1c1e2e;line-height:1.8;">Dados financeiros do último ano<br>Acesso ao CRM (se houver)<br>Seus 5 melhores clientes<br>Seus 5 principais concorrentes</div>
       </div>
-      <div class="field">
-        <label>Você é o ponto focal deste projeto?</label>
-        <div class="radio-group">
-          <label><input type="radio" name="ponto_focal"> Sim</label>
-          <label><input type="radio" name="ponto_focal"> Não — quem é? <input type="text" style="margin-left:8px; flex:1;"></label>
-        </div>
-      </div>
-      <div class="row2">
-        <div class="field"><label>Qual o nome da sua empresa?</label><input type="text"></div>
-        <div class="field"><label>Setor / indústria da empresa</label><input type="text"></div>
-      </div>
-      <div class="row2">
-        <div class="field"><label>Site/URL da sua empresa</label><input type="text"></div>
-        <div class="field"><label>LinkedIn da sua empresa</label><input type="text"></div>
-      </div>
-      <div class="field">
-        <label>Descreva brevemente o seu negócio</label>
-        <textarea></textarea>
+      <div style="flex:1;min-width:170px;padding:22px;background:#060923;border-radius:10px;border-top:3px solid #AE8A56;">
+        <div style="font-size:10px;letter-spacing:3px;text-transform:uppercase;color:#AE8A56;margin-bottom:8px;font-weight:600;">Seções</div>
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:40px;color:#FCFCFC;letter-spacing:2px;margin-bottom:6px;">12</div>
+        <div style="font-size:13px;color:rgba(252,252,252,.55);line-height:1.6;">Da identificação ao alinhamento.</div>
       </div>
     </div>
-  </div>
-
-  <!-- 2 -->
-  <div class="section">
-    <div class="section-header"><div class="num">2</div><h2>Estrutura de equipe</h2></div>
-    <div class="section-body">
-      <div class="row2">
-        <div class="field"><label>Quantas pessoas atuam no comercial/vendas?</label><input type="number" id="comercial_qtd"></div>
-        <div class="field"><label>Quantas pessoas atuam no marketing?</label><input type="number"></div>
-      </div>
-      <div class="field">
-        <label>Quem recebe as reuniões de vendas geradas?</label>
-        <div class="hint">Nome/cargo. É a mesma pessoa que hoje prospecta, ou alguém dedicado a fechar?</div>
-        <textarea id="quem_recebe"></textarea>
-      </div>
+    <div style="border-left:3px solid #AE8A56;padding:16px 22px;background:rgba(174,138,86,.05);border-radius:0 8px 8px 0;margin-bottom:40px;">
+      <p style="font-size:16px;font-style:italic;color:#060923;line-height:1.7;margin:0;">Quanto mais precisas as respostas, mais precisa será a estratégia.</p>
     </div>
+    <button class="btn-dark" onclick="go(2)">Ver estrutura do diagnóstico →</button>
   </div>
-
-  <!-- 3 -->
-  <div class="section">
-    <div class="section-header"><div class="num">3</div><h2>Produto, serviço e posicionamento</h2></div>
-    <div class="section-body">
-      <div class="field"><label>Quais são os seus principais produtos ou serviços?</label><textarea></textarea></div>
-      <div class="field"><label>Qual é o seu público-alvo ou segmento de mercado?</label><textarea id="publico"></textarea></div>
-      <div class="field"><label>Quais são os seus diferenciais perante os concorrentes? (mínimo 5)</label><textarea id="diferenciais" placeholder="1.&#10;2.&#10;3.&#10;4.&#10;5."></textarea></div>
-      <div class="field"><label>Quais as principais objeções da sua solução/produto? (mínimo 5)</label><textarea id="objecoes" placeholder="1.&#10;2.&#10;3.&#10;4.&#10;5."></textarea></div>
-      <div class="field"><label>Quais as principais dores que a sua solução/produto resolve? (mínimo 5)</label><textarea id="dores" placeholder="1.&#10;2.&#10;3.&#10;4.&#10;5."></textarea></div>
-    </div>
-  </div>
-
-  <!-- 4 -->
-  <div class="section">
-    <div class="section-header"><div class="num">4</div><h2>Mercado, carteira e concorrência</h2></div>
-    <div class="section-body">
-      <div class="field"><label>Quais são os seus principais clientes? (mínimo 5)</label><textarea placeholder="1.&#10;2.&#10;3.&#10;4.&#10;5."></textarea></div>
-      <div class="field"><label>Quais são os seus principais concorrentes? (mínimo 5)</label><textarea placeholder="1.&#10;2.&#10;3.&#10;4.&#10;5."></textarea></div>
-      <div class="field">
-        <label>Existe sazonalidade no seu negócio?</label>
-        <div class="hint">Períodos do ano em que vende naturalmente mais ou menos, por motivos do seu mercado (não relacionados à prospecção).</div>
-        <div class="radio-group">
-          <label><input type="radio" name="sazonal"> Sim — descreva abaixo</label>
-          <label><input type="radio" name="sazonal"> Não</label>
-        </div>
-        <textarea style="margin-top:8px;"></textarea>
-      </div>
-      <div class="field">
-        <label>Você possui listas para reprospecção/reengajamento?</label>
-        <div class="hint">Ex.: clientes inativos, leads frios, propostas perdidas.</div>
-        <div class="radio-group">
-          <label><input type="radio" name="listas"> Sim</label>
-          <label><input type="radio" name="listas"> Não</label>
-        </div>
-        <div class="field" style="margin-top:8px;"><label>Se sim, qual o tamanho aproximado e onde estão armazenadas?</label><textarea></textarea></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- 5 -->
-  <div class="section">
-    <div class="section-header"><div class="num">5</div><h2>Funil comercial — volume atual</h2></div>
-    <div class="section-body">
-      <div class="row2">
-        <div class="field">
-          <label>Prospecções realizadas mensalmente hoje</label>
-          <div class="hint">Quantos novos contatos/empresas vocês abordam ativamente por mês (ligações, e-mails, mensagens, etc.).</div>
-          <input type="number" id="prospeccoes">
-        </div>
-        <div class="field"><label>Reuniões de vendas geradas mensalmente</label><input type="number" id="reunioes_geradas"></div>
-      </div>
-      <div class="row2">
-        <div class="field"><label>Vendas realizadas mensalmente hoje</label><input type="number" id="vendas_mensais"></div>
-        <div class="field"><label>Negócios perdidos mensalmente hoje</label><input type="number" id="negocios_perdidos"></div>
-      </div>
-      <div class="field">
-        <label>Se você tivesse 10 reuniões de vendas com clientes em potencial, quantos negócios acha que fecharia?</label>
-        <div class="hint">Uma estimativa honesta da sua taxa de conversão atual — isso ajuda a calibrar quantas reuniões serão necessárias para bater suas metas.</div>
-        <input type="number" id="conversao10" max="10">
-      </div>
-      <div class="field">
-        <label>Qual o ciclo médio de venda?</label>
-        <div class="hint">Tempo entre o primeiro contato e o fechamento.</div>
-        <input type="text" id="ciclo_venda" placeholder="Ex.: 45 dias">
-      </div>
-    </div>
-  </div>
-
-  <!-- 6 -->
-  <div class="section">
-    <div class="section-header"><div class="num">6</div><h2>Dados financeiros</h2></div>
-    <div class="section-body">
-      <div class="field">
-        <label>Qual o seu faturamento médio mensal atual (R$)?</label>
-        <div class="hint">Considere a média dos últimos 3 a 6 meses, não apenas o mês atual.</div>
-        <input type="text">
-      </div>
-      <div class="row2">
-        <div class="field"><label>Faturamento anual do ano anterior (fechado)</label><input type="text"></div>
-        <div class="field"><label>Faturamento do ano atual até o momento</label><input type="text"></div>
-      </div>
-      <div class="hint" style="margin-top:-10px;">Valores aproximados já são suficientes — o objetivo é entender escala e tendência de crescimento.</div>
-      <div class="field"><label>Projeção de fechamento do ano atual</label><input type="text"></div>
-      <div class="field"><label>Quantos clientes ativos vocês possuem hoje?</label><input type="number"></div>
-      <div class="row2">
-        <div class="field"><label>Menor valor já vendido (ticket)</label><input type="text"></div>
-        <div class="field"><label>Maior valor já vendido (ticket)</label><input type="text"></div>
-      </div>
-      <div class="hint" style="margin-top:-10px;">Isso nos ajuda a entender a faixa real de negociação, não só a "média de papel".</div>
-      <div class="field">
-        <label>Quanto vocês investem para adquirir novos clientes?</label>
-        <div class="hint">Some tudo que é direcionado a gerar novos clientes: equipe comercial, ferramentas, ads, eventos, comissões etc. Considere o investimento total mensal ou anual (o que for mais fácil de informar).</div>
-        <input type="text">
-      </div>
-      <div class="field">
-        <label>Desse investimento, qual proporção é em marketing/ads/eventos vs. estrutura comercial direta?</label>
-        <div class="hint">Ex.: "70% estrutura comercial (salários/comissões) e 30% em ads e eventos". Não precisa ser exato.</div>
-        <textarea></textarea>
-      </div>
-      <div class="field">
-        <label>Você sabe calcular o seu CAC (Custo de Aquisição de Cliente)?</label>
-        <div class="hint">CAC = tudo que foi investido em aquisição num período, dividido pelo número de novos clientes fechados no mesmo período. Se não souber o número exato, tudo bem — vamos calcular com base nas respostas anteriores.</div>
-        <div class="radio-group">
-          <label><input type="radio" name="cac"> Sim — qual o valor aproximado? <input type="text" style="margin-left:8px; flex:1;"></label>
-          <label><input type="radio" name="cac"> Não sei calcular</label>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- 7 -->
-  <div class="section">
-    <div class="section-header"><div class="num">7</div><h2>Ferramentas, stack e mídias</h2></div>
-    <div class="section-body">
-      <div class="field"><label>Quais ferramentas e softwares comerciais utilizam atualmente?</label><textarea placeholder="CRM, automações, e-mail marketing, etc."></textarea></div>
-      <div class="field">
-        <label>Possui CRM?</label>
-        <div class="hint">Se sim, conte como ele é usado no dia a dia: é atualizado pela equipe regularmente ou serve mais como repositório (cadastro feito, mas pouco mantido)?</div>
-        <div class="radio-group">
-          <label><input type="radio" name="crm" value="sim" class="crm-radio"> Sim — qual e como é usado? <input type="text" id="crm_como" style="margin-left:8px; flex:1;"></label>
-          <label><input type="radio" name="crm" value="nao" class="crm-radio"> Não</label>
-        </div>
-      </div>
-      <div class="field">
-        <label>Quais mídias sociais usam ativamente?</label>
-        <div class="check-group" id="midias_group">
-          <label><input type="checkbox" class="midia"> LinkedIn</label>
-          <label><input type="checkbox" class="midia"> Instagram</label>
-          <label><input type="checkbox" class="midia"> Facebook</label>
-          <label><input type="checkbox" class="midia"> YouTube</label>
-          <label><input type="checkbox" class="midia"> Outra: <input type="text" style="margin-left:8px; flex:1;"></label>
-        </div>
-      </div>
-      <div class="field">
-        <label>Possui LinkedIn Sales Navigator?</label>
-        <div class="radio-group">
-          <label><input type="radio" name="navigator" value="sim" class="nav-radio"> Sim</label>
-          <label><input type="radio" name="navigator" value="nao" class="nav-radio"> Não</label>
-          <label><input type="radio" name="navigator" value="naosei" class="nav-radio"> Não sei</label>
-        </div>
-      </div>
-      <div class="field">
-        <label>Possui LinkedIn Premium (Business ou Sales Navigator) na(s) conta(s) que serão usadas para prospecção?</label>
-        <div class="hint">Para a operação de automação na AlessIA Flow, é imprescindível possuir uma dessas assinaturas.</div>
-        <div class="radio-group">
-          <label><input type="radio" name="premium" value="sim" class="premium-radio"> Sim</label>
-          <label><input type="radio" name="premium" value="nao" class="premium-radio"> Não</label>
-          <label><input type="radio" name="premium" value="naosei" class="premium-radio"> Não sei</label>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- 8 -->
-  <div class="section">
-    <div class="section-header"><div class="num">8</div><h2>Estratégia de prospecção atual</h2></div>
-    <div class="section-body">
-      <div class="field">
-        <label>Você possui alguma estratégia de prospecção atualmente?</label>
-        <div class="radio-group">
-          <label><input type="radio" name="estrategia"> Sim — descreva abaixo</label>
-          <label><input type="radio" name="estrategia"> Não</label>
-        </div>
-        <textarea style="margin-top:8px;" placeholder="Canais usados, scripts, o que funcionou e o que não funcionou."></textarea>
-      </div>
-    </div>
-  </div>
-
-  <!-- 9 -->
-  <div class="section">
-    <div class="section-header"><div class="num">9</div><h2>Materiais de apoio comercial</h2></div>
-    <div class="section-body">
-      <div class="field">
-        <label>Quais materiais vocês possuem hoje?</label>
-        <div class="check-group" id="materiais_group">
-          <label><input type="checkbox" class="material"> Apresentação institucional/comercial</label>
-          <label><input type="checkbox" class="material"> Modelo(s) de proposta</label>
-          <label><input type="checkbox" class="material"> Vídeos institucionais ou cases</label>
-          <label><input type="checkbox" class="material"> PDFs / one-pagers</label>
-          <label><input type="checkbox" id="materiais_nenhum"> Nenhum desses ainda</label>
-        </div>
-      </div>
-      <div class="field">
-        <label>Esses materiais estão atualizados ou precisam de revisão?</label>
-        <div class="hint">Pense em: informações desatualizadas (preços, equipe, cases antigos), identidade visual antiga, ou conteúdo que já não reflete o que vocês vendem hoje.</div>
-        <textarea></textarea>
-      </div>
-    </div>
-  </div>
-
-  <!-- 10 -->
-  <div class="section">
-    <div class="section-header"><div class="num">10</div><h2>Expectativas e metas do projeto</h2></div>
-    <div class="section-body">
-      <div class="field">
-        <label>Qual a expectativa de respostas totais para esse projeto?</label>
-        <div class="hint">Considerando positivas, neutras e negativas.</div>
-        <input type="text">
-      </div>
-      <div class="field">
-        <label>Quantas reuniões você espera ter/receber mensalmente?</label>
-        <div class="hint">Considerando apenas as respostas positivas.</div>
-        <input type="text">
-      </div>
-      <div class="field">
-        <label>O que representaria sucesso para você em 30, 60 e 90 dias de operação?</label>
-        <div class="hint">Pense em termos concretos: número de reuniões, pipeline gerado, ou até primeiras vendas — o que faria você dizer "está funcionando"?</div>
-        <textarea></textarea>
-      </div>
-    </div>
-  </div>
-
-  <!-- 11 -->
-  <div class="section">
-    <div class="section-header"><div class="num">11</div><h2>Restrições e exclusões</h2></div>
-    <div class="section-body">
-      <div class="field">
-        <label>Que empresas e/ou pessoas não devemos prospectar?</label>
-        <div class="hint">Informe linha por linha. Para empresa: nome e URL. Para pessoa: nome e LinkedIn.</div>
-        <textarea></textarea>
-      </div>
-      <div class="field">
-        <label>Existe algum tema, concorrente ou sensibilidade do setor que devemos evitar mencionar nas abordagens?</label>
-        <textarea></textarea>
-      </div>
-    </div>
-  </div>
-
-  <!-- 12 -->
-  <div class="section">
-    <div class="section-header"><div class="num">12</div><h2>Ciência e alinhamento de expectativas</h2></div>
-    <div class="section-body">
-      <div class="ack">
-        <label><input type="checkbox"> Estou ciente de que o período de configuração/estruturação da operação tem duração de 30 dias.</label>
-      </div>
-      <div class="ack">
-        <label><input type="checkbox"> Estou ciente de que a prospecção ativa começa no 1º dia do segundo mês.</label>
-      </div>
-      <div class="ack">
-        <label><input type="checkbox"> Estou ciente de que a Veross não tem responsabilidade direta pelo fechamento dos negócios — o papel da operação é gerar oportunidades qualificadas.</label>
-      </div>
-      <div class="ack">
-        <label><input type="checkbox"> Estou ciente de que, para a operação de automação funcionar, a(s) conta(s) de LinkedIn utilizadas precisam possuir Premium (Business ou Sales Navigator).</label>
-      </div>
-      <div class="ack">
-        <label><input type="checkbox"> Estou ciente de que as informações fornecidas neste formulário são a base de toda a estratégia, e que respostas imprecisas podem comprometer os resultados da operação.</label>
-      </div>
-    </div>
-  </div>
-
-  <!-- RESULTADO VISUAL -->
-  <div class="section" id="resultado" style="display:none;">
-    <div class="section-header"><div class="num">★</div><h2>Prévia visual do preenchimento</h2></div>
-    <div class="section-body">
-      <p style="font-family:'Helvetica Neue',Arial,sans-serif; font-size:13px; color:var(--muted);">
-        Este painel não é um diagnóstico, é apenas um espelho do que você acabou de preencher — uma forma rápida de visualizar, em 6 frentes, o quanto cada área da sua operação já está estruturada e documentada hoje. Vamos aprofundar cada ponto na sequência do projeto.
-      </p>
-      <div style="display:flex; justify-content:center; margin:16px 0;">
-        <svg id="radar" viewBox="0 0 360 360" width="320" height="320"></svg>
-      </div>
-      <div id="radar-legend" style="font-family:'Helvetica Neue',Arial,sans-serif; font-size:13px; color:var(--text); display:grid; grid-template-columns:1fr 1fr; gap:6px 16px;"></div>
-    </div>
-  </div>
-
-  <div class="submit-bar">
-    <button type="button" id="submit-btn" onclick="enviarDiagnostico()">Enviar diagnóstico</button>
-    <p>Os acessos operacionais (LinkedIn, CRM, etc.) serão coletados separadamente, durante o kick-off.</p>
-    <div id="submit-status" class="submit-status" aria-live="polite"></div>
-  </div>
-
 </div>
 
+<!-- ═══ SLIDE 2: SUMÁRIO ═══ -->
+<div id="slide-2" class="slide" style="background:#f7f5f1;min-height:100vh;">
+  <div class="stickybar" style="justify-content:space-between;padding:16px 40px;">
+    <img src="../../assets/brand/logo-veross.svg" alt="Veross" style="height:24px;width:auto;filter:brightness(0) invert(1);opacity:.85;">
+    <button class="btn-back" onclick="prev()">← Voltar</button>
+  </div>
+  <div class="form-body" style="max-width:960px;">
+    <div class="cover-eyebrow" style="color:#AE8A56;">Visão geral</div>
+    <div style="font-family:'Bebas Neue',sans-serif;font-size:clamp(32px,4.5vw,54px);color:#060923;letter-spacing:2px;margin-bottom:10px;line-height:1;">ESTRUTURA DO DIAGNÓSTICO</div>
+    <p style="font-size:15px;color:#6b6f85;margin-bottom:40px;max-width:540px;line-height:1.7;">12 seções que cobrem todos os aspectos da sua operação comercial. Clique para navegar diretamente.</p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px;margin-bottom:40px;">
+      <button onclick="go(4)" style="background:#060923;border:1px solid rgba(174,138,86,.2);border-radius:10px;padding:20px;text-align:left;display:flex;flex-direction:column;gap:5px;">
+        <div style="font-family:'DM Mono',monospace;font-size:11px;color:#AE8A56;letter-spacing:2px;">01</div>
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:20px;color:#FCFCFC;letter-spacing:1px;line-height:1.1;">Identificação</div>
+        <div style="font-size:12px;color:rgba(252,252,252,.4);line-height:1.5;">Nome, empresa, setor e contato</div>
+      </button>
+      <button onclick="go(6)" style="background:#060923;border:1px solid rgba(174,138,86,.2);border-radius:10px;padding:20px;text-align:left;display:flex;flex-direction:column;gap:5px;">
+        <div style="font-family:'DM Mono',monospace;font-size:11px;color:#AE8A56;letter-spacing:2px;">02</div>
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:20px;color:#FCFCFC;letter-spacing:1px;line-height:1.1;">Estrutura de Equipe</div>
+        <div style="font-size:12px;color:rgba(252,252,252,.4);line-height:1.5;">Comercial, marketing e responsáveis</div>
+      </button>
+      <button onclick="go(8)" style="background:#060923;border:1px solid rgba(174,138,86,.2);border-radius:10px;padding:20px;text-align:left;display:flex;flex-direction:column;gap:5px;">
+        <div style="font-family:'DM Mono',monospace;font-size:11px;color:#AE8A56;letter-spacing:2px;">03</div>
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:20px;color:#FCFCFC;letter-spacing:1px;line-height:1.1;">Produto e Posicionamento</div>
+        <div style="font-size:12px;color:rgba(252,252,252,.4);line-height:1.5;">Diferenciais, objeções e dores</div>
+      </button>
+      <button onclick="go(10)" style="background:#060923;border:1px solid rgba(174,138,86,.2);border-radius:10px;padding:20px;text-align:left;display:flex;flex-direction:column;gap:5px;">
+        <div style="font-family:'DM Mono',monospace;font-size:11px;color:#AE8A56;letter-spacing:2px;">04</div>
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:20px;color:#FCFCFC;letter-spacing:1px;line-height:1.1;">Mercado e Concorrência</div>
+        <div style="font-size:12px;color:rgba(252,252,252,.4);line-height:1.5;">Clientes, concorrentes, sazonalidade</div>
+      </button>
+      <button onclick="go(12)" style="background:#060923;border:1px solid rgba(174,138,86,.2);border-radius:10px;padding:20px;text-align:left;display:flex;flex-direction:column;gap:5px;">
+        <div style="font-family:'DM Mono',monospace;font-size:11px;color:#AE8A56;letter-spacing:2px;">05</div>
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:20px;color:#FCFCFC;letter-spacing:1px;line-height:1.1;">Funil Comercial</div>
+        <div style="font-size:12px;color:rgba(252,252,252,.4);line-height:1.5;">Prospecções, reuniões e conversão</div>
+      </button>
+      <button onclick="go(14)" style="background:#060923;border:1px solid rgba(174,138,86,.2);border-radius:10px;padding:20px;text-align:left;display:flex;flex-direction:column;gap:5px;">
+        <div style="font-family:'DM Mono',monospace;font-size:11px;color:#AE8A56;letter-spacing:2px;">06</div>
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:20px;color:#FCFCFC;letter-spacing:1px;line-height:1.1;">Dados Financeiros</div>
+        <div style="font-size:12px;color:rgba(252,252,252,.4);line-height:1.5;">Faturamento, ticket médio e CAC</div>
+      </button>
+      <button onclick="go(16)" style="background:#060923;border:1px solid rgba(174,138,86,.2);border-radius:10px;padding:20px;text-align:left;display:flex;flex-direction:column;gap:5px;">
+        <div style="font-family:'DM Mono',monospace;font-size:11px;color:#AE8A56;letter-spacing:2px;">07</div>
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:20px;color:#FCFCFC;letter-spacing:1px;line-height:1.1;">Ferramentas e Stack</div>
+        <div style="font-size:12px;color:rgba(252,252,252,.4);line-height:1.5;">CRM, mídias e LinkedIn</div>
+      </button>
+      <button onclick="go(18)" style="background:#060923;border:1px solid rgba(174,138,86,.2);border-radius:10px;padding:20px;text-align:left;display:flex;flex-direction:column;gap:5px;">
+        <div style="font-family:'DM Mono',monospace;font-size:11px;color:#AE8A56;letter-spacing:2px;">08</div>
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:20px;color:#FCFCFC;letter-spacing:1px;line-height:1.1;">Estratégia de Prospecção</div>
+        <div style="font-size:12px;color:rgba(252,252,252,.4);line-height:1.5;">O que existe e o que funcionou</div>
+      </button>
+      <button onclick="go(20)" style="background:#060923;border:1px solid rgba(174,138,86,.2);border-radius:10px;padding:20px;text-align:left;display:flex;flex-direction:column;gap:5px;">
+        <div style="font-family:'DM Mono',monospace;font-size:11px;color:#AE8A56;letter-spacing:2px;">09</div>
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:20px;color:#FCFCFC;letter-spacing:1px;line-height:1.1;">Materiais de Apoio</div>
+        <div style="font-size:12px;color:rgba(252,252,252,.4);line-height:1.5;">Apresentações, propostas e vídeos</div>
+      </button>
+      <button onclick="go(22)" style="background:#060923;border:1px solid rgba(174,138,86,.2);border-radius:10px;padding:20px;text-align:left;display:flex;flex-direction:column;gap:5px;">
+        <div style="font-family:'DM Mono',monospace;font-size:11px;color:#AE8A56;letter-spacing:2px;">10</div>
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:20px;color:#FCFCFC;letter-spacing:1px;line-height:1.1;">Expectativas e Metas</div>
+        <div style="font-size:12px;color:rgba(252,252,252,.4);line-height:1.5;">Reuniões e sucesso em 90 dias</div>
+      </button>
+      <button onclick="go(24)" style="background:#060923;border:1px solid rgba(174,138,86,.2);border-radius:10px;padding:20px;text-align:left;display:flex;flex-direction:column;gap:5px;">
+        <div style="font-family:'DM Mono',monospace;font-size:11px;color:#AE8A56;letter-spacing:2px;">11</div>
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:20px;color:#FCFCFC;letter-spacing:1px;line-height:1.1;">Público-Alvo — ICP</div>
+        <div style="font-size:12px;color:rgba(252,252,252,.4);line-height:1.5;">Setor, porte, cargo e perfil ideal</div>
+      </button>
+      <button onclick="go(26)" style="background:#060923;border:1px solid rgba(174,138,86,.2);border-radius:10px;padding:20px;text-align:left;display:flex;flex-direction:column;gap:5px;">
+        <div style="font-family:'DM Mono',monospace;font-size:11px;color:#AE8A56;letter-spacing:2px;">12</div>
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:20px;color:#FCFCFC;letter-spacing:1px;line-height:1.1;">Ciência e Alinhamento</div>
+        <div style="font-size:12px;color:rgba(252,252,252,.4);line-height:1.5;">Termos e expectativas do projeto</div>
+      </button>
+    </div>
+    <button class="btn-dark" onclick="go(4)">Começar pela seção 01 →</button>
+  </div>
+</div>
+
+<!-- ═══ SLIDE 4: FORM S01 ═══ -->
+<div id="slide-4" class="slide" style="background:#FCFCFC;min-height:100vh;">
+  <div class="stickybar">
+    <img src="../../assets/brand/logo-veross.svg" alt="Veross" style="height:18px;width:auto;filter:brightness(0) invert(1);opacity:.6;flex-shrink:0;">
+    <div class="snum">01</div>
+    <div class="stitle">IDENTIFICAÇÃO</div>
+    <button class="btn-back" onclick="prev()">← Voltar</button>
+  </div>
+  <div class="form-body">
+    <div class="row2">
+      <div class="field"><label class="lbl">Qual o seu nome?</label><input type="text" id="s1_nome"></div>
+      <div class="field"><label class="lbl">Qual o seu cargo na empresa?</label><input type="text" id="s1_cargo"></div>
+    </div>
+    <div class="row2">
+      <div class="field"><label class="lbl">Qual o seu e-mail?</label><input type="email" id="s1_email"></div>
+      <div class="field"><label class="lbl">Qual o seu telefone?</label><input type="tel" id="s1_telefone"></div>
+    </div>
+    <div class="field">
+      <div class="lbl" style="margin-bottom:10px;">Você é o ponto focal deste projeto?</div>
+      <div class="radio-col">
+        <label><input type="radio" name="ponto_focal" value="sim"> Sim</label>
+        <label><input type="radio" name="ponto_focal" value="nao"> Não — quem é? <input type="text" id="s1_pf_quem" style="display:inline-block;width:auto;margin-left:8px;padding:5px 10px;font-size:13px;"></label>
+      </div>
+    </div>
+    <div class="row2">
+      <div class="field"><label class="lbl">Qual o nome da sua empresa?</label><input type="text" id="s1_empresa"></div>
+      <div class="field"><label class="lbl">Setor / indústria da empresa</label><input type="text" id="s1_setor"></div>
+    </div>
+    <div class="row2">
+      <div class="field"><label class="lbl">Site / URL da sua empresa</label><input type="text" id="s1_site"></div>
+      <div class="field"><label class="lbl">LinkedIn da sua empresa</label><input type="text" id="s1_linkedin"></div>
+    </div>
+    <div class="field"><label class="lbl">Descreva brevemente o seu negócio</label><textarea id="s1_descricao"></textarea></div>
+    <div class="form-foot"><button class="btn-dark" onclick="next()">Avançar →</button></div>
+  </div>
+</div>
+
+<!-- ═══ SLIDE 6: FORM S02 ═══ -->
+<div id="slide-6" class="slide" style="background:#FCFCFC;min-height:100vh;">
+  <div class="stickybar">
+    <img src="../../assets/brand/logo-veross.svg" alt="Veross" style="height:18px;width:auto;filter:brightness(0) invert(1);opacity:.6;flex-shrink:0;">
+    <div class="snum">02</div>
+    <div class="stitle">ESTRUTURA DE EQUIPE</div>
+    <button class="btn-back" onclick="prev()">← Voltar</button>
+  </div>
+  <div class="form-body">
+    <div class="row2">
+      <div class="field"><label class="lbl">Quantas pessoas atuam no comercial/vendas?</label><input type="number" id="s2_comercial" min="0"></div>
+      <div class="field"><label class="lbl">Quantas pessoas atuam no marketing?</label><input type="number" id="s2_marketing" min="0"></div>
+    </div>
+    <div class="field">
+      <label class="lbl">Quem recebe as reuniões de vendas geradas?</label>
+      <div class="hint">Nome/cargo. É a mesma pessoa que hoje prospecta, ou alguém dedicado a fechar?</div>
+      <textarea id="s2_recebe"></textarea>
+    </div>
+    <div class="row2">
+      <div class="field">
+        <div class="lbl" style="margin-bottom:4px;">Existe pessoa dedicada exclusivamente a receber as reuniões?</div>
+        <div class="radio-col">
+          <label><input type="radio" name="s2_dedicado" value="sim"> Sim — função exclusiva</label>
+          <label><input type="radio" name="s2_dedicado" value="nao"> Não — acumulado com outras funções</label>
+        </div>
+      </div>
+      <div class="field">
+        <div class="lbl" style="margin-bottom:4px;">Existe pré-vendas (SDR/BDR) na operação?</div>
+        <div class="radio-col">
+          <label><input type="radio" name="s2_sdr" value="sim"> Sim</label>
+          <label><input type="radio" name="s2_sdr" value="nao"> Não</label>
+        </div>
+      </div>
+      <div class="field">
+        <div class="lbl" style="margin-bottom:4px;">Existe pós-vendas / Customer Success (CS) estruturado?</div>
+        <div class="radio-col">
+          <label><input type="radio" name="s2_cs" value="sim"> Sim</label>
+          <label><input type="radio" name="s2_cs" value="nao"> Não</label>
+        </div>
+      </div>
+    </div>
+    <div class="form-foot"><button class="btn-dark" onclick="next()">Avançar →</button></div>
+  </div>
+</div>
+
+<!-- ═══ SLIDE 8: FORM S03 ═══ -->
+<div id="slide-8" class="slide" style="background:#FCFCFC;min-height:100vh;">
+  <div class="stickybar">
+    <img src="../../assets/brand/logo-veross.svg" alt="Veross" style="height:18px;width:auto;filter:brightness(0) invert(1);opacity:.6;flex-shrink:0;">
+    <div class="snum">03</div>
+    <div class="stitle">PRODUTO, SERVIÇO E POSICIONAMENTO</div>
+    <button class="btn-back" onclick="prev()">← Voltar</button>
+  </div>
+  <div class="form-body">
+    <div class="field"><label class="lbl">Quais são os seus principais produtos ou serviços?</label><textarea id="s3_produtos"></textarea></div>
+    <div class="field"><label class="lbl">Qual é o seu público-alvo ou segmento de mercado?</label><textarea id="s3_publico"></textarea></div>
+    <div class="field">
+      <label class="lbl">Quais são os seus diferenciais perante os concorrentes? <span style="color:#AE8A56;font-weight:400;">(mínimo 5)</span></label>
+      <textarea id="s3_diferenciais" style="min-height:110px;" placeholder="1.&#10;2.&#10;3.&#10;4.&#10;5."></textarea>
+    </div>
+    <div class="field">
+      <label class="lbl">Quais as principais objeções da sua solução/produto? <span style="color:#AE8A56;font-weight:400;">(mínimo 5)</span></label>
+      <textarea id="s3_objecoes" style="min-height:110px;" placeholder="1.&#10;2.&#10;3.&#10;4.&#10;5."></textarea>
+    </div>
+    <div class="field">
+      <label class="lbl">Quais as principais dores que a sua solução/produto resolve? <span style="color:#AE8A56;font-weight:400;">(mínimo 5)</span></label>
+      <textarea id="s3_dores" style="min-height:110px;" placeholder="1.&#10;2.&#10;3.&#10;4.&#10;5."></textarea>
+    </div>
+    <div class="row2" style="margin-top:2px;">
+      <div class="field" style="flex:0 0 140px;min-width:130px;">
+        <label class="lbl">Nota do produto/serviço (0–10)</label>
+        <div class="hint">Sua avaliação honesta da solução hoje.</div>
+        <input type="number" id="s3_nota_produto" min="0" max="10" placeholder="Ex.: 7">
+      </div>
+      <div class="field" style="flex:2;min-width:200px;">
+        <label class="lbl">O que poderia ser melhorado?</label>
+        <textarea id="s3_melhorias" style="min-height:44px;" placeholder="Principais pontos de melhoria..."></textarea>
+      </div>
+    </div>
+    <div class="field">
+      <label class="lbl">O que seus clientes mais valorizam na sua solução?</label>
+      <textarea id="s3_valor_cliente" style="min-height:44px;" placeholder="O que faz clientes ficarem e indicarem..."></textarea>
+    </div>
+    <div class="form-foot"><button class="btn-dark" onclick="next()">Avançar →</button></div>
+  </div>
+</div>
+
+<!-- ═══ SLIDE 10: FORM S04 ═══ -->
+<div id="slide-10" class="slide" style="background:#FCFCFC;min-height:100vh;">
+  <div class="stickybar">
+    <img src="../../assets/brand/logo-veross.svg" alt="Veross" style="height:18px;width:auto;filter:brightness(0) invert(1);opacity:.6;flex-shrink:0;">
+    <div class="snum">04</div>
+    <div class="stitle">MERCADO, CARTEIRA E CONCORRÊNCIA</div>
+    <button class="btn-back" onclick="prev()">← Voltar</button>
+  </div>
+  <div class="form-body">
+    <div class="field">
+      <label class="lbl">Quais são os seus principais clientes? <span style="color:#AE8A56;font-weight:400;">(mínimo 5)</span></label>
+      <textarea id="s4_clientes" style="min-height:110px;" placeholder="1.&#10;2.&#10;3.&#10;4.&#10;5."></textarea>
+    </div>
+    <div class="field">
+      <label class="lbl">Quais são os seus principais concorrentes? <span style="color:#AE8A56;font-weight:400;">(mínimo 5)</span></label>
+      <textarea id="s4_concorrentes" style="min-height:110px;" placeholder="1.&#10;2.&#10;3.&#10;4.&#10;5."></textarea>
+    </div>
+    <div class="field">
+      <div class="lbl" style="margin-bottom:5px;">Existe sazonalidade no seu negócio?</div>
+      <div class="hint">Períodos em que vende naturalmente mais ou menos por motivos de mercado.</div>
+      <div class="radio-col" style="margin-bottom:10px;">
+        <label><input type="radio" name="sazonal" value="sim"> Sim — descreva abaixo</label>
+        <label><input type="radio" name="sazonal" value="nao"> Não</label>
+      </div>
+      <textarea id="s4_sazonal_desc" placeholder="Descreva os períodos de alta e baixa..."></textarea>
+    </div>
+    
+    <div class="row2">
+      <div class="field">
+        <label class="lbl">Nota de conhecimento de mercado (0–10)</label>
+        <div class="hint">Considera: clareza do posicionamento, mapeamento de concorrentes e diferenciais percebidos.</div>
+        <input type="number" id="s4_nota_mercado" min="0" max="10" placeholder="Ex.: 6">
+      </div>
+    </div>
+    <div class="field">
+      <div class="lbl" style="margin-bottom:5px;">Você possui listas para reprospecção/reengajamento?</div>
+      <div class="hint">Ex.: clientes inativos, leads frios, propostas perdidas.</div>
+      <div class="radio-col" style="margin-bottom:10px;">
+        <label><input type="radio" name="listas" value="sim"> Sim</label>
+        <label><input type="radio" name="listas" value="nao"> Não</label>
+      </div>
+      <label class="lbl">Se sim, qual o tamanho aproximado e onde estão armazenadas?</label>
+      <textarea id="s4_listas_desc"></textarea>
+    </div>
+    <div class="form-foot"><button class="btn-dark" onclick="next()">Avançar →</button></div>
+  </div>
+</div>
+
+<!-- ═══ SLIDE 12: FORM S05 ═══ -->
+<div id="slide-12" class="slide" style="background:#FCFCFC;min-height:100vh;">
+  <div class="stickybar">
+    <img src="../../assets/brand/logo-veross.svg" alt="Veross" style="height:18px;width:auto;filter:brightness(0) invert(1);opacity:.6;flex-shrink:0;">
+    <div class="snum">05</div>
+    <div class="stitle">FUNIL COMERCIAL — VOLUME ATUAL</div>
+    <button class="btn-back" onclick="prev()">← Voltar</button>
+  </div>
+  <div class="form-body">
+    <div class="row2">
+      <div class="field">
+        <label class="lbl">Prospecções realizadas mensalmente</label>
+        <div class="hint">Novos contatos/empresas abordados ativamente por mês.</div>
+        <input type="number" id="s5_prospeccoes" min="0">
+      </div>
+      <div class="field">
+        <label class="lbl">Reuniões de vendas geradas mensalmente</label>
+        <div class="hint">&nbsp;</div>
+        <input type="number" id="s5_reunioes" min="0">
+      </div>
+    </div>
+    <div class="row2">
+      <div class="field"><label class="lbl">Vendas realizadas mensalmente</label><input type="number" id="s5_vendas" min="0"></div>
+      <div class="field"><label class="lbl">Negócios perdidos mensalmente</label><input type="number" id="s5_perdidos" min="0"></div>
+    </div>
+    <div class="field">
+      <label class="lbl">Se você tivesse 10 reuniões com clientes em potencial, quantos negócios fecharia?</label>
+      <div class="hint">Uma estimativa honesta da sua taxa de conversão atual.</div>
+      <input type="number" id="s5_conversao" min="0" max="10" placeholder="Ex.: 3">
+    </div>
+    <div class="field">
+      <label class="lbl">Qual o ciclo médio de venda?</label>
+      <div class="hint">Tempo entre o primeiro contato e o fechamento.</div>
+      <input type="text" id="s5_ciclo" placeholder="Ex.: 45 dias">
+    </div>
+    <div class="form-foot"><button class="btn-dark" onclick="next()">Avançar →</button></div>
+  </div>
+</div>
+
+<!-- ═══ SLIDE 14: FORM S06 ═══ -->
+<div id="slide-14" class="slide" style="background:#FCFCFC;min-height:100vh;">
+  <div class="stickybar">
+    <img src="../../assets/brand/logo-veross.svg" alt="Veross" style="height:18px;width:auto;filter:brightness(0) invert(1);opacity:.6;flex-shrink:0;">
+    <div class="snum">06</div>
+    <div class="stitle">DADOS FINANCEIROS</div>
+    <button class="btn-back" onclick="prev()">← Voltar</button>
+  </div>
+  <div class="form-body">
+    <div class="field">
+      <label class="lbl">Faturamento médio mensal atual (R$)?</label>
+      <div class="hint">Considere a média dos últimos 3 a 6 meses.</div>
+      <input type="text" id="s6_fat_mensal" placeholder="R$ 0,00">
+    </div>
+    <div class="row2">
+      <div class="field"><label class="lbl">Faturamento anual do ano anterior</label><input type="text" id="s6_fat_anterior" placeholder="R$ 0,00"></div>
+      <div class="field"><label class="lbl">Faturamento do ano atual até agora</label><input type="text" id="s6_fat_atual" placeholder="R$ 0,00"></div>
+    </div>
+    <div class="field"><label class="lbl">Projeção de fechamento do ano atual</label><input type="text" id="s6_projecao" placeholder="R$ 0,00"></div>
+    <div class="field"><label class="lbl">Quantos clientes ativos vocês possuem hoje?</label><input type="number" id="s6_clientes" min="0"></div>
+    <div class="row2">
+      <div class="field"><label class="lbl">Menor valor já vendido (ticket)</label><input type="text" id="s6_menor_ticket" placeholder="R$ 0,00"></div>
+      <div class="field"><label class="lbl">Maior valor já vendido (ticket)</label><input type="text" id="s6_maior_ticket" placeholder="R$ 0,00"></div>
+    </div>
+    <div class="field">
+      <label class="lbl">Quanto vocês investem para adquirir novos clientes?</label>
+      <div class="hint">Some tudo: equipe, ferramentas, ads, eventos, comissões. Informe mensal ou anual.</div>
+      <input type="text" id="s6_investimento">
+    </div>
+    <div class="field">
+      <label class="lbl">Desse investimento, qual a proporção marketing/ads vs. estrutura comercial?</label>
+      <div class="hint">Ex.: "70% estrutura comercial e 30% em ads". Não precisa ser exato.</div>
+      <textarea id="s6_proporcao"></textarea>
+    </div>
+    
+    <div class="row2">
+      <div class="field">
+        <label class="lbl">LTV médio por cliente (em meses)</label>
+        <div class="hint">Tempo médio que um cliente permanece ativo.</div>
+        <input type="number" id="s6_ltv_meses" min="0" placeholder="Ex.: 18">
+      </div>
+      <div class="field">
+        <label class="lbl">LTV médio por cliente (em R$)</label>
+        <div class="hint">Receita total gerada por cliente no período.</div>
+        <input type="text" id="s6_ltv_valor" placeholder="R$ 0,00">
+      </div>
+    </div>
+    <div class="field">
+      <div class="lbl" style="margin-bottom:5px;">Você sabe calcular o seu CAC (Custo de Aquisição de Cliente)?</div>
+      <div class="hint">CAC = investimento total ÷ novos clientes no período.</div>
+      <div class="radio-col">
+        <label><input type="radio" name="cac" value="sim"> Sim — qual o valor aproximado? <input type="text" id="s6_cac_val" style="display:inline-block;width:auto;margin-left:8px;padding:5px 10px;font-size:13px;"></label>
+        <label><input type="radio" name="cac" value="nao"> Não sei calcular</label>
+      </div>
+    </div>
+    <div class="form-foot"><button class="btn-dark" onclick="next()">Avançar →</button></div>
+  </div>
+</div>
+
+<!-- ═══ SLIDE 16: FORM S07 ═══ -->
+<div id="slide-16" class="slide" style="background:#FCFCFC;min-height:100vh;">
+  <div class="stickybar">
+    <img src="../../assets/brand/logo-veross.svg" alt="Veross" style="height:18px;width:auto;filter:brightness(0) invert(1);opacity:.6;flex-shrink:0;">
+    <div class="snum">07</div>
+    <div class="stitle">FERRAMENTAS, STACK E MÍDIAS</div>
+    <button class="btn-back" onclick="prev()">← Voltar</button>
+  </div>
+  <div class="form-body">
+    <div class="field"><label class="lbl">Quais ferramentas e softwares comerciais utilizam atualmente?</label><textarea id="s7_ferramentas" placeholder="CRM, automações, e-mail marketing..."></textarea></div>
+    <div class="field">
+      <div class="lbl" style="margin-bottom:5px;">Possui CRM?</div>
+      <div class="hint">Se sim, como ele é usado no dia a dia: atualizado regularmente ou serve mais como repositório?</div>
+      <div class="radio-col">
+        <label><input type="radio" name="crm" value="sim"> Sim — qual e como é usado? <input type="text" id="s7_crm_uso" style="display:inline-block;width:auto;margin-left:8px;padding:5px 10px;font-size:13px;"></label>
+        <label><input type="radio" name="crm" value="nao"> Não</label>
+      </div>
+    </div>
+    <div class="field">
+      <div class="lbl" style="margin-bottom:10px;">Quais mídias sociais usam ativamente?</div>
+      <div class="check-col">
+        <label><input type="checkbox" data-group="midias" value="LinkedIn"> LinkedIn</label>
+        <label><input type="checkbox" data-group="midias" value="Instagram"> Instagram</label>
+        <label><input type="checkbox" data-group="midias" value="Facebook"> Facebook</label>
+        <label><input type="checkbox" data-group="midias" value="YouTube"> YouTube</label>
+        <label><input type="checkbox" data-group="midias" value="Outra"> Outra: <input type="text" id="s7_midia_outra" style="display:inline-block;width:auto;margin-left:8px;padding:5px 10px;font-size:13px;"></label>
+      </div>
+    </div>
+    <div class="field">
+      <div class="lbl" style="margin-bottom:10px;">Possui LinkedIn Sales Navigator?</div>
+      <div class="radio-col">
+        <label><input type="radio" name="navigator" value="sim"> Sim</label>
+        <label><input type="radio" name="navigator" value="nao"> Não</label>
+        <label><input type="radio" name="navigator" value="naosei"> Não sei</label>
+      </div>
+    </div>
+    <div class="field">
+      <div class="lbl" style="margin-bottom:5px;">Possui LinkedIn Premium (Business ou Sales Navigator) nas contas que serão usadas para prospecção?</div>
+      <div class="hint">Para a operação de automação na AlessIA Flow, é imprescindível possuir uma dessas assinaturas.</div>
+      <div class="radio-col">
+        <label><input type="radio" name="premium" value="sim"> Sim</label>
+        <label><input type="radio" name="premium" value="nao"> Não</label>
+        <label><input type="radio" name="premium" value="naosei"> Não sei</label>
+      </div>
+    </div>
+    <div class="form-foot"><button class="btn-dark" onclick="next()">Avançar →</button></div>
+  </div>
+</div>
+
+<!-- ═══ SLIDE 18: FORM S08 ═══ -->
+<div id="slide-18" class="slide" style="background:#FCFCFC;min-height:100vh;">
+  <div class="stickybar">
+    <img src="../../assets/brand/logo-veross.svg" alt="Veross" style="height:18px;width:auto;filter:brightness(0) invert(1);opacity:.6;flex-shrink:0;">
+    <div class="snum">08</div>
+    <div class="stitle">ESTRATÉGIA DE PROSPECÇÃO ATUAL</div>
+    <button class="btn-back" onclick="prev()">← Voltar</button>
+  </div>
+  <div class="form-body">
+    <div class="field">
+      <div class="lbl" style="margin-bottom:10px;">Você possui alguma estratégia de prospecção atualmente?</div>
+      <div class="radio-col" style="margin-bottom:12px;">
+        <label><input type="radio" name="estrategia" value="sim"> Sim — descreva abaixo</label>
+        <label><input type="radio" name="estrategia" value="nao"> Não</label>
+      </div>
+      <textarea id="s8_estrategia" style="min-height:120px;" placeholder="Canais usados, scripts, o que funcionou e o que não funcionou..."></textarea>
+    </div>
+    <div class="form-foot"><button class="btn-dark" onclick="next()">Avançar →</button></div>
+  </div>
+</div>
+
+<!-- ═══ SLIDE 20: FORM S09 ═══ -->
+<div id="slide-20" class="slide" style="background:#FCFCFC;min-height:100vh;">
+  <div class="stickybar">
+    <img src="../../assets/brand/logo-veross.svg" alt="Veross" style="height:18px;width:auto;filter:brightness(0) invert(1);opacity:.6;flex-shrink:0;">
+    <div class="snum">09</div>
+    <div class="stitle">MATERIAIS DE APOIO COMERCIAL</div>
+    <button class="btn-back" onclick="prev()">← Voltar</button>
+  </div>
+  <div class="form-body">
+        <div class="row2">
+      <div class="field">
+        <label class="lbl">Nota dos materiais comerciais (0–10)</label>
+        <div class="hint">Considera: design, atualização, relevância e clareza da proposta de valor.</div>
+        <input type="number" id="s9_nota_materiais" min="0" max="10" placeholder="Ex.: 6">
+      </div>
+    </div>
+    <div class="field">
+      <div class="lbl" style="margin-bottom:10px;">Quais materiais vocês possuem hoje?</div>
+      <div class="check-col">
+        <label><input type="checkbox" data-group="materiais" value="Apresentação institucional/comercial"> Apresentação institucional/comercial</label>
+        <label><input type="checkbox" data-group="materiais" value="Modelo(s) de proposta"> Modelo(s) de proposta</label>
+        <label><input type="checkbox" data-group="materiais" value="Vídeos institucionais ou cases"> Vídeos institucionais ou cases</label>
+        <label><input type="checkbox" data-group="materiais" value="PDFs / one-pagers"> PDFs / one-pagers</label>
+        <label><input type="checkbox" data-group="materiais" value="Nenhum desses ainda"> Nenhum desses ainda</label>
+      </div>
+    </div>
+    <div class="field">
+      <label class="lbl">Esses materiais estão atualizados ou precisam de revisão?</label>
+      <div class="hint">Informações desatualizadas, identidade visual antiga ou conteúdo que não reflete o que vendem hoje.</div>
+      <textarea id="s9_status"></textarea>
+    </div>
+    <div class="form-foot"><button class="btn-dark" onclick="next()">Avançar →</button></div>
+  </div>
+</div>
+
+<!-- ═══ SLIDE 22: FORM S10 ═══ -->
+<div id="slide-22" class="slide" style="background:#FCFCFC;min-height:100vh;">
+  <div class="stickybar">
+    <img src="../../assets/brand/logo-veross.svg" alt="Veross" style="height:18px;width:auto;filter:brightness(0) invert(1);opacity:.6;flex-shrink:0;">
+    <div class="snum">10</div>
+    <div class="stitle">EXPECTATIVAS E METAS DO PROJETO</div>
+    <button class="btn-back" onclick="prev()">← Voltar</button>
+  </div>
+  <div class="form-body">
+    <div class="field">
+      <label class="lbl">Qual a expectativa de respostas totais para esse projeto?</label>
+      <div class="hint">Considerando positivas, neutras e negativas.</div>
+      <input type="text" id="s10_respostas">
+    </div>
+    <div class="field">
+      <label class="lbl">Quantas reuniões você espera ter/receber mensalmente?</label>
+      <div class="hint">Considerando apenas as respostas positivas.</div>
+      <input type="text" id="s10_reunioes">
+    </div>
+    <div class="field">
+      <label class="lbl">O que representaria sucesso para você em 30, 60 e 90 dias de operação?</label>
+      <div class="hint">Pense em termos concretos: reuniões, pipeline ou primeiras vendas.</div>
+      <textarea id="s10_sucesso" style="min-height:110px;" placeholder="30 dias: ...&#10;60 dias: ...&#10;90 dias: ..."></textarea>
+    </div>
+    <div class="form-foot"><button class="btn-dark" onclick="next()">Avançar →</button></div>
+  </div>
+</div>
+
+<!-- ═══ SLIDE 24: FORM S11 ═══ -->
+<div id="slide-24" class="slide" style="background:#FCFCFC;min-height:100vh;">
+  <div class="stickybar">
+    <img src="../../assets/brand/logo-veross.svg" alt="Veross" style="height:18px;width:auto;filter:brightness(0) invert(1);opacity:.6;flex-shrink:0;">
+    <div class="snum">11</div>
+    <div class="stitle">PÚBLICO-ALVO — ICP</div>
+    <button class="btn-back" onclick="prev()">← Voltar</button>
+  </div>
+  <div class="form-body">
+    <div class="row2">
+      <div class="field">
+        <label class="lbl">Setor / segmento do cliente ideal</label>
+        <input type="text" id="s11_icp_setor" placeholder="Ex.: Indústria, Tecnologia B2B, Saúde…">
+      </div>
+      <div class="field">
+        <label class="lbl">Região / localidade do cliente ideal</label>
+        <input type="text" id="s11_icp_localidade" placeholder="Ex.: São Paulo, Brasil, América Latina…">
+      </div>
+    </div>
+    <div class="row2">
+      <div class="field">
+        <label class="lbl">Porte da empresa ideal (funcionários)</label>
+        <input type="text" id="s11_icp_porte" placeholder="Ex.: 50–500, acima de 200…">
+      </div>
+      <div class="field">
+        <label class="lbl">Faturamento anual do cliente ideal</label>
+        <input type="text" id="s11_icp_faturamento" placeholder="Ex.: R$ 5M a R$ 50M…">
+      </div>
+    </div>
+    <div style="font-size:10px;letter-spacing:3px;text-transform:uppercase;color:#AE8A56;margin:8px 0 6px;font-weight:600;">Contato Ideal (CI)</div>
+    <div class="row2">
+      <div class="field">
+        <label class="lbl">Cargo do decisor / contato ideal</label>
+        <input type="text" id="s11_ci_cargo" placeholder="Ex.: Diretor Comercial, CEO, VP de Vendas…">
+      </div>
+      <div class="field">
+        <label class="lbl">Área / departamento</label>
+        <input type="text" id="s11_ci_area" placeholder="Ex.: Comercial, Marketing, Operações…">
+      </div>
+    </div>
+    <div class="row2">
+      <div class="field">
+        <label class="lbl">Nível de senioridade</label>
+        <input type="text" id="s11_ci_senioridade" placeholder="Ex.: Gerente, Diretor, C-Level…">
+      </div>
+      <div class="field">
+        <label class="lbl">Cliente ideal vs. cliente ruim — o que diferencia?</label>
+        <textarea id="s11_ci_desc" style="min-height:44px;" placeholder="Critérios de qualificação..."></textarea>
+      </div>
+    </div>
+    <div class="form-foot"><button class="btn-dark" onclick="next()">Avançar →</button></div>
+  </div>
+</div>
+
+
+<!-- ═══ SLIDE 26: FORM S12 ═══ -->
+<div id="slide-26" class="slide" style="background:#FCFCFC;min-height:100vh;">
+  <div class="stickybar">
+    <img src="../../assets/brand/logo-veross.svg" alt="Veross" style="height:18px;width:auto;filter:brightness(0) invert(1);opacity:.6;flex-shrink:0;">
+    <div class="snum">12</div>
+    <div class="stitle">CIÊNCIA E ALINHAMENTO DE EXPECTATIVAS</div>
+    <button class="btn-back" onclick="prev()">← Voltar</button>
+  </div>
+  <div class="form-body">
+    <p style="font-size:15px;color:#6b6f85;margin-bottom:28px;line-height:1.7;">Leia com atenção e marque cada item para confirmar o seu entendimento antes de enviar o diagnóstico.</p>
+    <label class="ack-item"><input type="checkbox" id="ack1"><span>Estou ciente de que o período de configuração/estruturação da operação tem duração de <strong>30 dias</strong>.</span></label>
+    <label class="ack-item"><input type="checkbox" id="ack2"><span>Estou ciente de que a <strong>prospecção ativa começa no 1º dia do segundo mês</strong>.</span></label>
+    <label class="ack-item"><input type="checkbox" id="ack3"><span>Estou ciente de que a Veross <strong>não tem responsabilidade direta pelo fechamento dos negócios</strong> — o papel da operação é gerar oportunidades qualificadas.</span></label>
+    <label class="ack-item"><input type="checkbox" id="ack4"><span>Estou ciente de que, para a operação de automação funcionar, a(s) conta(s) de LinkedIn utilizadas precisam possuir <strong>Premium (Business ou Sales Navigator)</strong>.</span></label>
+    <label class="ack-item"><input type="checkbox" id="ack5"><span>Estou ciente de que as <strong>informações fornecidas neste formulário são a base de toda a estratégia</strong>, e que respostas imprecisas podem comprometer os resultados.</span></label>
+    <div class="form-foot"><button class="btn-gold" onclick="next()">Concluir diagnóstico →</button></div>
+  </div>
+</div>
+
+<!-- ═══ SLIDE 27: ENCERRAMENTO ═══ -->
+<div id="slide-27" class="slide" style="background:#060923;display:flex;flex-direction:column;justify-content:center;padding:40px 36px;overflow:hidden;">
+  <div style="position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#AE8A56,transparent);"></div>
+  <div style="position:absolute;top:32px;left:8vw;">
+    <img src="../../assets/brand/logo-veross.svg" alt="Veross" style="height:28px;width:auto;filter:brightness(0) invert(1);opacity:.7;">
+  </div>
+  <div style="position:absolute;right:5%;top:50%;transform:translateY(-50%);opacity:.04;pointer-events:none;">
+    <svg width="300" height="300" viewBox="0 0 300 300" fill="none"><circle cx="150" cy="150" r="145" stroke="#AE8A56" stroke-width="2"/><path d="M88 150L130 192L212 108" stroke="#AE8A56" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </div>
+  <div style="position:relative;z-index:1;max-width:640px;">
+    <div style="display:flex;align-items:center;gap:14px;margin-bottom:36px;">
+      <div style="width:48px;height:48px;border-radius:50%;border:2px solid #AE8A56;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#AE8A56" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12L10 17L19 8"/></svg>
+      </div>
+      <div style="font-size:11px;letter-spacing:4px;text-transform:uppercase;color:#AE8A56;font-weight:500;">Diagnóstico completo</div>
+    </div>
+    <div style="font-family:'Bebas Neue',sans-serif;font-size:clamp(42px,6.5vw,78px);color:#FCFCFC;letter-spacing:3px;line-height:.95;margin-bottom:8px;">OBRIGADO</div>
+    <div style="font-family:'Bebas Neue',sans-serif;font-size:clamp(26px,3.5vw,48px);color:#AE8A56;letter-spacing:3px;line-height:.95;margin-bottom:30px;">PELO SEU TEMPO E CUIDADO.</div>
+    <div style="width:48px;height:2px;background:#AE8A56;margin-bottom:24px;"></div>
+    <p style="font-size:16px;line-height:1.8;color:rgba(252,252,252,.6);max-width:500px;margin-bottom:16px;font-weight:300;">As informações que você compartilhou são o alicerce de toda a estratégia. A equipe Veross vai analisar cada resposta com atenção antes do seu kick-off.</p>
+    <div style="padding:15px 19px;background:rgba(174,138,86,.08);border-radius:8px;margin-bottom:44px;border-left:2px solid rgba(174,138,86,.3);">
+      <p style="font-size:13px;font-style:italic;color:#AE8A56;line-height:1.7;margin:0;">"Porque vender mais resolve o mês. Estruturar como vender melhor é o que sustenta empresas de verdade."</p>
+    </div>
+    <div style="display:flex;flex-wrap:wrap;gap:10px;margin-bottom:20px;">
+      
+      
+      <button id="btn-submit" onclick="openConfirm()" class="btn-gold">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13"/><path d="M22 2L15 22 11 13 2 9l20-7z"/></svg>
+        Enviar formulário
+      </button>
+    </div>
+    <button onclick="go(2)" style="background:none;border:none;color:rgba(174,138,86,.5);font-size:12px;letter-spacing:.05em;padding:0;font-weight:500;cursor:pointer;">← Revisar respostas</button>
+  </div>
+</div>
+
+</div><!-- /container -->
+<div id="confirm-modal" style="display:none;position:absolute;inset:0;background:rgba(6,9,35,.9);z-index:99998;align-items:center;justify-content:center;flex-direction:column;">
+  <div style="background:#0D1540;border:1px solid rgba(174,138,86,.22);border-radius:14px;padding:34px 30px;max-width:310px;width:90%;text-align:center;">
+    <div style="font-family:'Bebas Neue',sans-serif;font-size:26px;color:#FCFCFC;letter-spacing:3px;line-height:1.1;margin-bottom:11px;">ENVIAR<br><span style="color:#AE8A56;">DIAGNÓSTICO?</span></div>
+    <p style="font-size:13px;color:rgba(252,252,252,.38);margin-bottom:24px;line-height:1.6;">As respostas serão registradas na planilha Veross.</p>
+    <div style="display:flex;gap:10px;justify-content:center;">
+      <button onclick="closeConfirm()" style="display:inline-flex;align-items:center;padding:10px 18px;background:transparent;border:1.5px solid rgba(174,138,86,.28);color:rgba(252,252,252,.5);font-weight:600;font-size:12px;letter-spacing:.06em;border-radius:8px;text-transform:uppercase;cursor:pointer;font-family:'DM Sans',sans-serif;">Cancelar</button>
+      <button onclick="confirmSend()" style="display:inline-flex;align-items:center;padding:10px 20px;background:#AE8A56;border:none;color:#060923;font-weight:700;font-size:12px;letter-spacing:.06em;border-radius:8px;text-transform:uppercase;cursor:pointer;font-family:'DM Sans',sans-serif;">Confirmar →</button>
+    </div>
+  </div>
+</div>
+</div><!-- /form-panel -->
+<div id="building-panel">
+  <div id="bld-top">
+    <div id="bld-eyebrow">Veross · Diagnóstico ECOV</div>
+    <div id="bld-title">SUA OPERAÇÃO<br><span style="color:#AE8A56;">EM CONSTRUÇÃO</span></div>
+    <div id="bld-status">Aguardando início do diagnóstico…</div>
+  </div>
+  <div id="svg-wrap">
+    <svg id="iso-svg" viewBox="0 0 500 420" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg"></svg>
+  </div>
+  <div id="bld-bottom">
+    <div class="bld-legend" id="bld-legend"></div>
+  </div>
+</div><!-- /building-panel -->
+</div><!-- /app -->
+<div id="vtop" style="position:fixed;top:0;left:0;right:0;z-index:99999;pointer-events:none;display:flex;justify-content:center;opacity:0;transition:opacity .3s ease;"><span id="vtxt" style="background:#dc4a4a;color:#fff;padding:10px 28px 11px;border-radius:0 0 10px 10px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;letter-spacing:.04em;box-shadow:0 4px 14px rgba(220,74,74,.3);"></span></div>
+
+<script src="../../config/endpoints.js"></script>
 <script>
+var current = 0;
 
-const GOOGLE_SCRIPT_URL = 'https://script.google.com/a/macros/veross.com.br/s/AKfycby6NA5r6ZAPbdwRdwoRHvRtBTrxfMLN4sN6RVVIqUmjhkvyJToW_ewtamWobxC9dgAj/exec';
-const FORM_TOKEN = 'ecov_diagnostico_v1';
+/* ── Session tracking ───────────────────────────────────── */
+var SESSION_ID    = 'ECOV-' + Date.now() + '-' + Math.random().toString(36).substr(2,6).toUpperCase();
+var SESSION_START = Date.now();
+var _utmP         = new URLSearchParams(window.location.search);
 
-function cleanText(text){
-  return (text || '')
-    .replace(/\s+/g, ' ')
-    .replace(/\*/g, '')
-    .trim();
-}
-
-function slugify(text){
-  return cleanText(text)
-    .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '')
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, '_')
-    .replace(/^_+|_+$/g, '')
-    .slice(0, 90) || 'campo';
-}
-
-function getDirectLabel(container){
-  return Array.from(container.children).find(function(child){ return child.tagName === 'LABEL'; }) || null;
-}
-
-function labelTextWithoutInputs(label){
-  if(!label) return '';
-  var clone = label.cloneNode(true);
-  clone.querySelectorAll('input, textarea, select').forEach(function(el){ el.remove(); });
-  return cleanText(clone.textContent);
-}
-
-function textInputValue(el){
-  if(!el || el.disabled) return '';
-  var type = (el.type || '').toLowerCase();
-  if(['radio','checkbox','button','submit','reset','hidden'].indexOf(type) >= 0) return '';
-  return cleanText(el.value);
-}
-
-function setStatus(type, message){
-  var box = document.getElementById('submit-status');
-  if(!box) return;
-  box.className = 'submit-status ' + type;
-  box.textContent = message;
-}
-
-function uniqueKey(obj, base){
-  var key = base;
-  var i = 2;
-  while(Object.prototype.hasOwnProperty.call(obj, key)){
-    key = base + '_' + i;
-    i++;
+function go(to) {
+  to = Math.max(0, Math.min(27, to));
+  if (to === current) return;
+  var dir = to > current ? 1 : -1;
+  var TR  = 'transform .45s cubic-bezier(.4,0,.2,1), opacity .35s ease';
+  var _to = to, _from = current, _dir = dir;
+  current = to;
+  var outEl = document.getElementById('slide-' + _from);
+  var inEl  = document.getElementById('slide-' + _to);
+  // Posiciona entrada fora da tela (sem transição)
+  if (inEl) {
+    inEl.style.transition    = 'none';
+    inEl.style.transform     = 'translateX(' + (_dir * 100) + '%)';
+    inEl.style.opacity       = '1';
+    inEl.style.pointerEvents = 'none';
   }
-  return key;
+  // Garante repaint antes de ativar a transição
+  requestAnimationFrame(function() {
+    requestAnimationFrame(function() {
+      if (outEl) {
+        outEl.style.transition = TR;
+        outEl.style.transform  = 'translateX(' + (-_dir * 100) + '%)';
+        outEl.style.opacity    = '0';
+        outEl.style.pointerEvents = 'none';
+      }
+      if (inEl) {
+        inEl.style.transition  = TR;
+        inEl.style.transform   = 'translateX(0)';
+        inEl.style.opacity     = '1';
+        inEl.style.pointerEvents = 'auto';
+        inEl.scrollTop = 0;
+      }
+      var fill = document.getElementById('pfill');
+      if (fill) fill.style.width = ((_to / 27) * 100).toFixed(1) + '%';
+    });
+  });
+  try { localStorage.setItem('ecov-slide', to); } catch(e) {}
 }
 
-function serializeOption(input){
-  var label = input.closest('label');
-  var txt = labelTextWithoutInputs(label) || input.value || 'Selecionado';
-  var extras = [];
-  if(label){
-    label.querySelectorAll('input:not([type="radio"]):not([type="checkbox"]), textarea, select').forEach(function(extra){
-      var v = textInputValue(extra);
-      if(v) extras.push(v);
+/* ── Campos obrigatórios por slide de formulário ────── */
+var REQ={
+  4:{f:['s1_nome','s1_cargo','s1_email','s1_telefone','s1_empresa','s1_setor','s1_descricao'],r:['ponto_focal']},
+  6:{f:['s2_comercial','s2_marketing','s2_recebe'],r:['s2_dedicado','s2_sdr','s2_cs']},
+  8:{f:['s3_produtos','s3_publico','s3_diferenciais','s3_objecoes','s3_dores','s3_nota_produto']},
+  10:{f:['s4_clientes','s4_concorrentes','s4_nota_mercado'],r:['sazonal','listas']},
+  12:{f:['s5_prospeccoes','s5_reunioes','s5_vendas','s5_perdidos','s5_conversao','s5_ciclo']},
+  14:{f:['s6_fat_mensal','s6_fat_anterior','s6_fat_atual','s6_projecao','s6_clientes','s6_menor_ticket','s6_maior_ticket','s6_investimento','s6_proporcao'],r:['cac']},
+  16:{f:['s7_ferramentas'],r:['crm','navigator','premium'],cg:['midias']},
+  18:{r:['estrategia']},
+  20:{cg:['materiais'],f:['s9_nota_materiais']},
+  22:{f:['s10_respostas','s10_reunioes','s10_sucesso']},
+  24:{f:['s11_icp_setor','s11_icp_localidade','s11_ci_cargo','s11_ci_area']},
+  26:{ck:['ack1','ack2','ack3','ack4','ack5']}
+};
+var _vTimer=null;
+
+function showToast(msg,ok){
+  var vw=document.getElementById('vtop'),vt=document.getElementById('vtxt');
+  if(!vw||!vt)return;
+  vt.textContent=msg;
+  vt.style.background=ok?'#2d8a57':'#dc4a4a';
+  vt.style.boxShadow=ok?'0 4px 14px rgba(45,138,87,.35)':'0 4px 14px rgba(220,74,74,.3)';
+  vw.style.opacity='1';
+  clearTimeout(_vTimer);
+  _vTimer=setTimeout(function(){vw.style.opacity='0';},3400);
+}
+
+function _markField(el){
+  if(!el)return;
+  el.classList.add('f-err');
+  function clr(){el.classList.remove('f-err');el.removeEventListener('input',clr);el.removeEventListener('change',clr);}
+  el.addEventListener('input',clr);el.addEventListener('change',clr);
+}
+
+function _markGroup(wrap){
+  if(!wrap)return;
+  wrap.classList.add('rg-err');
+  function clr(){wrap.classList.remove('rg-err');wrap.removeEventListener('change',clr);}
+  wrap.addEventListener('change',clr);
+}
+
+function validate(idx){
+  var req=REQ[idx];
+  if(!req)return true;
+  var ok=true,firstEl=null;
+  var slide=document.getElementById('slide-'+idx);
+  (req.f||[]).forEach(function(id){
+    var el=document.getElementById(id);
+    if(!el)return;
+    if(el.value.trim()===''){_markField(el);ok=false;if(!firstEl)firstEl=el;}
+    else el.classList.remove('f-err');
+  });
+  (req.r||[]).forEach(function(name){
+    if(!document.querySelector('input[name="'+name+'"]:checked')){
+      var first=document.querySelector('#slide-'+idx+' input[name="'+name+'"]');
+      _markGroup(first?(first.closest('.radio-col')||first.parentElement):null);
+      ok=false;if(!firstEl&&first)firstEl=first;
+    }
+  });
+  (req.cg||[]).forEach(function(group){
+    if(!document.querySelectorAll('#slide-'+idx+' input[data-group="'+group+'"]:checked').length){
+      var firstCb=document.querySelector('#slide-'+idx+' input[data-group="'+group+'"]');
+      _markGroup(firstCb?(firstCb.closest('.check-col')||firstCb.parentElement):null);
+      ok=false;if(!firstEl&&firstCb)firstEl=firstCb;
+    }
+  });
+  (req.ck||[]).forEach(function(id){
+    var el=document.getElementById(id);
+    if(!el||!el.checked){
+      var item=el?el.closest('.ack-item'):null;
+      if(item){
+        item.style.borderColor='#dc4a4a';
+        (function(it,e){e.addEventListener('change',function cb(){if(e.checked){it.style.borderColor='';}e.removeEventListener('change',cb);});})(item,el);
+      }
+      if(!firstEl&&el)firstEl=el;ok=false;
+    }
+  });
+  if(!ok){
+    showToast('Preencha todos os campos para continuar');
+    if(firstEl&&slide){
+      var rect=firstEl.getBoundingClientRect(),sRect=slide.getBoundingClientRect();
+      slide.scrollTop=Math.max(0,slide.scrollTop+(rect.top-sRect.top)-110);
+    }
+  }
+  return ok;
+}
+
+var SKIP_MAP={3:1,5:1,7:1,9:1,11:1,13:1,15:1,17:1,19:1,21:1,23:1,25:1};
+function next(){
+  var n=current+1;
+  while(n<=27&&SKIP_MAP[n])n++;
+  if(validate(current)){if(typeof activateBlock==="function")activateBlock(current);go(n);}
+}
+function prev(){
+  var n=current-1;
+  while(n>=0&&SKIP_MAP[n])n--;
+  go(n);
+}
+
+function gv(id) { var el=document.getElementById(id); return el?el.value.trim():''; }
+function rv(name) { var el=document.querySelector('input[name="'+name+'"]:checked'); return el?el.value:''; }
+function cbv(group) { return Array.from(document.querySelectorAll('input[data-group="'+group+'"]:checked')).map(function(e){return e.value;}).join(', '); }
+function ackv(id) { var el=document.getElementById(id); return (el&&el.checked)?'Confirmado':'Não confirmado'; }
+
+function buildBody() {
+  var s = '\n' + Array(48).fill('─').join('') + '\n';
+  return [
+    'DIAGNÓSTICO ECOV — VEROSS','══════════════════════════════════════════════','',
+    '01. IDENTIFICAÇÃO'+s,
+    'Nome: '+gv('s1_nome'),'Cargo: '+gv('s1_cargo'),'E-mail: '+gv('s1_email'),'Telefone: '+gv('s1_telefone'),
+    'Ponto focal: '+rv('ponto_focal'),'Empresa: '+gv('s1_empresa'),'Setor: '+gv('s1_setor'),
+    'Site: '+gv('s1_site'),'LinkedIn: '+gv('s1_linkedin'),'Descrição: '+gv('s1_descricao'),'',
+    '02. ESTRUTURA DE EQUIPE'+s,
+    'Comercial: '+gv('s2_comercial'),'Marketing: '+gv('s2_marketing'),'Quem recebe: '+gv('s2_recebe'),'',
+    '03. PRODUTO E POSICIONAMENTO'+s,
+    'Produtos: '+gv('s3_produtos'),'Público: '+gv('s3_publico'),
+    'Diferenciais: '+gv('s3_diferenciais'),'Objeções: '+gv('s3_objecoes'),'Dores: '+gv('s3_dores'),'',
+    '04. MERCADO E CONCORRÊNCIA'+s,
+    'Clientes: '+gv('s4_clientes'),'Concorrentes: '+gv('s4_concorrentes'),
+    'Sazonalidade: '+rv('sazonal')+' — '+gv('s4_sazonal_desc'),'Listas: '+rv('listas')+' — '+gv('s4_listas_desc'),'',
+    '05. FUNIL COMERCIAL'+s,
+    'Prospecções/mês: '+gv('s5_prospeccoes'),'Reuniões/mês: '+gv('s5_reunioes'),
+    'Vendas/mês: '+gv('s5_vendas'),'Perdidos/mês: '+gv('s5_perdidos'),
+    'Conversão em 10: '+gv('s5_conversao'),'Ciclo médio: '+gv('s5_ciclo'),'',
+    '06. DADOS FINANCEIROS'+s,
+    'Fat. mensal: '+gv('s6_fat_mensal'),'Fat. ano anterior: '+gv('s6_fat_anterior'),
+    'Fat. ano atual: '+gv('s6_fat_atual'),'Projeção: '+gv('s6_projecao'),
+    'Clientes ativos: '+gv('s6_clientes'),'Menor ticket: '+gv('s6_menor_ticket'),
+    'Maior ticket: '+gv('s6_maior_ticket'),'Investimento: '+gv('s6_investimento'),
+    'Proporção: '+gv('s6_proporcao'),'CAC: '+rv('cac')+' — '+gv('s6_cac_val'),'',
+    '07. FERRAMENTAS E STACK'+s,
+    'Ferramentas: '+gv('s7_ferramentas'),'CRM: '+rv('crm')+' — '+gv('s7_crm_uso'),
+    'Mídias: '+cbv('midias'),'Sales Navigator: '+rv('navigator'),'LinkedIn Premium: '+rv('premium'),'',
+    '08. ESTRATÉGIA DE PROSPECÇÃO'+s,'Estratégia: '+rv('estrategia')+' — '+gv('s8_estrategia'),'',
+    '09. MATERIAIS DE APOIO'+s,'Materiais: '+cbv('materiais'),'Status: '+gv('s9_status'),'',
+    '10. EXPECTATIVAS E METAS'+s,
+    'Expectativa respostas: '+gv('s10_respostas'),'Reuniões/mês: '+gv('s10_reunioes'),'Sucesso 30/60/90: '+gv('s10_sucesso'),'',
+    '11. RESTRIÇÕES E EXCLUSÕES'+s,'Não prospectar: '+gv('s11_nao_prospectar'),'Sensibilidades: '+gv('s11_sensibilidades'),'',
+    '12. CIÊNCIA E ALINHAMENTO'+s,
+    'Configuração 30d: '+ackv('ack1'),'Prospecção 2º mês: '+ackv('ack2'),
+    'Responsabilidade: '+ackv('ack3'),'LinkedIn Premium: '+ackv('ack4'),'Info. base: '+ackv('ack5'),'',
+    '══════════════════════════════════════════════','Diagnóstico ECOV · Veross'
+  ].join('\n');
+}
+
+function sendEmail() {
+  var nome = gv('s1_nome') || 'Cliente';
+  var emp  = gv('s1_empresa');
+  var sub  = 'Diagnóstico ECOV — ' + nome + (emp ? ' · ' + emp : '');
+  window.location.href = 'mailto:?subject=' + encodeURIComponent(sub) + '&body=' + encodeURIComponent(buildBody());
+}
+
+function downloadPDF() {
+  var slides = document.querySelectorAll('.slide');
+  var c = document.getElementById('container');
+  c.style.cssText = 'overflow:visible;height:auto;position:static;';
+  document.body.style.overflow = 'auto';
+  slides.forEach(function(el) {
+    el.style.cssText += ';position:static;transform:none;opacity:1;pointer-events:auto;height:auto;';
+  });
+  window.print();
+  setTimeout(function() {
+    c.style.cssText = 'position:relative;overflow:hidden;width:100%;height:100vh;';
+    document.body.style.overflow = 'hidden';
+    slides.forEach(function(el, i) {
+      el.style.position = 'absolute';
+      el.style.height   = '100%';
+      el.style.transform = i === current ? 'translateX(0)' : (i < current ? 'translateX(-100%)' : 'translateX(100%)');
+      el.style.opacity  = i === current ? '1' : '0';
+      el.style.pointerEvents = i === current ? 'auto' : 'none';
+    });
+  }, 800);
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   GOOGLE APPS SCRIPT — CONFIGURAÇÃO
+   ──────────────────────────────────────────────────────────────────
+   1. Acesse script.google.com e crie um novo projeto.
+   2. Cole o código abaixo no editor e salve.
+   3. Clique em "Implantar" → "Nova implantação" → tipo: "App da Web".
+      - Executar como: Eu mesmo
+      - Quem pode acessar: Qualquer pessoa (inclusive anônimos)
+   4. Copie a URL gerada e cole em APPS_SCRIPT_URL abaixo.
+
+   ── Código para o Google Apps Script ───────────────────────────────
+
+   function doPost(e) {
+     var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+     var data  = JSON.parse(e.postData.contents);
+     if (sheet.getLastRow() === 0) {
+       sheet.appendRow(Object.keys(data));
+     }
+     sheet.appendRow(Object.values(data));
+     return ContentService
+       .createTextOutput(JSON.stringify({ status: 'ok' }))
+       .setMimeType(ContentService.MimeType.JSON);
+   }
+
+   ════════════════════════════════════════════════════════════════ */
+
+  var APPS_SCRIPT_URL = (typeof ENDPOINTS !== 'undefined' && ENDPOINTS.diagnosticoEcov)
+    ? ENDPOINTS.diagnosticoEcov
+    : 'https://script.google.com/a/macros/veross.com.br/s/AKfycbwh1xxitHaGCCmjs1yUXnUuYX9lz4EY6uV1zleN7UNmwT4sBQw2oOHOIlU5adbtl55jTQ/exec';
+
+function buildJSON() {
+  return {
+    form_token:           'ecov_diagnostico_v1',
+    timestamp:            new Date().toISOString(),
+    // Meta / Tracking
+    session_id:           SESSION_ID,
+    tempo_preen:          Math.round((Date.now()-SESSION_START)/60000)+' min',
+    dispositivo:          /Mobi|Android/i.test(navigator.userAgent)?'Mobile':(/Tablet|iPad/i.test(navigator.userAgent)?'Tablet':'Desktop'),
+    navegador:            (function(){var u=navigator.userAgent;if(/Chrome/i.test(u)&&!/Edge|Edg/i.test(u))return 'Chrome';if(/Firefox/i.test(u))return 'Firefox';if(/Safari/i.test(u)&&!/Chrome/i.test(u))return 'Safari';if(/Edg/i.test(u))return 'Edge';return 'Outro';})(),
+    sistema_op:           (function(){var u=navigator.userAgent;if(/Windows/i.test(u))return 'Windows';if(/Mac/i.test(u))return 'macOS';if(/iPhone|iPad/i.test(u))return 'iOS';if(/Android/i.test(u))return 'Android';return 'Outro';})(),
+    idioma:               navigator.language||'',
+    fuso_horario:         Intl.DateTimeFormat().resolvedOptions().timeZone||'',
+    resolucao:            screen.width+'x'+screen.height,
+    referrer:             document.referrer||'',
+    url_acesso:           window.location.href,
+    utm_source:           _utmP.get('utm_source')||'',
+    utm_medium:           _utmP.get('utm_medium')||'',
+    utm_campaign:         _utmP.get('utm_campaign')||'',
+    utm_term:             _utmP.get('utm_term')||'',
+    utm_content:          _utmP.get('utm_content')||'',
+    // 01 Identificação
+    nome:                 gv('s1_nome'),
+    cargo:                gv('s1_cargo'),
+    email:                gv('s1_email'),
+    telefone:             gv('s1_telefone'),
+    ponto_focal:          rv('ponto_focal'),
+    pf_quem:              gv('s1_pf_quem'),
+    empresa:              gv('s1_empresa'),
+    setor:                gv('s1_setor'),
+    site:                 gv('s1_site'),
+    linkedin_empresa:     gv('s1_linkedin'),
+    descricao_negocio:    gv('s1_descricao'),
+    // 02 Equipe
+    equipe_comercial:     gv('s2_comercial'),
+    equipe_marketing:     gv('s2_marketing'),
+    quem_recebe_reunioes: gv('s2_recebe'),
+    dedicado_reunioes:    rv('s2_dedicado'),
+    tem_sdr:              rv('s2_sdr'),
+    tem_cs:               rv('s2_cs'),
+    // 03 Produto
+    produtos:             gv('s3_produtos'),
+    publico:              gv('s3_publico'),
+    diferenciais:         gv('s3_diferenciais'),
+    objecoes:             gv('s3_objecoes'),
+    dores:                gv('s3_dores'),
+    nota_produto:         gv('s3_nota_produto'),
+    melhorias_produto:    gv('s3_melhorias'),
+    valor_percebido:      gv('s3_valor_cliente'),
+    // 04 Mercado
+    principais_clientes:  gv('s4_clientes'),
+    concorrentes:         gv('s4_concorrentes'),
+    sazonalidade:         rv('sazonal'),
+    sazonalidade_desc:    gv('s4_sazonal_desc'),
+    listas_reprosp:       rv('listas'),
+    listas_desc:          gv('s4_listas_desc'),
+    nota_mercado:         gv('s4_nota_mercado'),
+    // 05 Funil
+    prospeccoes_mes:      gv('s5_prospeccoes'),
+    reunioes_mes:         gv('s5_reunioes'),
+    vendas_mes:           gv('s5_vendas'),
+    perdidos_mes:         gv('s5_perdidos'),
+    conversao_em_10:      gv('s5_conversao'),
+    ciclo_medio:          gv('s5_ciclo'),
+    // 06 Financeiro
+    fat_mensal:           gv('s6_fat_mensal'),
+    fat_ano_anterior:     gv('s6_fat_anterior'),
+    fat_ano_atual:        gv('s6_fat_atual'),
+    projecao:             gv('s6_projecao'),
+    clientes_ativos:      gv('s6_clientes'),
+    menor_ticket:         gv('s6_menor_ticket'),
+    maior_ticket:         gv('s6_maior_ticket'),
+    investimento_aquisicao: gv('s6_investimento'),
+    proporcao_invest:     gv('s6_proporcao'),
+    cac_sabe:             rv('cac'),
+    cac_valor:            gv('s6_cac_val'),
+    ltv_meses:            gv('s6_ltv_meses'),
+    ltv_valor:            gv('s6_ltv_valor'),
+    // 07 Stack
+    ferramentas:          gv('s7_ferramentas'),
+    crm:                  rv('crm'),
+    crm_uso:              gv('s7_crm_uso'),
+    midias_sociais:       cbv('midias'),
+    midia_outra:          gv('s7_midia_outra'),
+    sales_navigator:      rv('navigator'),
+    linkedin_premium:     rv('premium'),
+    // 08 Prospecção
+    tem_estrategia:       rv('estrategia'),
+    estrategia_desc:      gv('s8_estrategia'),
+    // 09 Materiais
+    materiais:            cbv('materiais'),
+    materiais_status:     gv('s9_status'),
+    nota_materiais:       gv('s9_nota_materiais'),
+    // 10 Expectativas
+    expectativa_respostas: gv('s10_respostas'),
+    reunioes_esperadas:   gv('s10_reunioes'),
+    sucesso_30_60_90:     gv('s10_sucesso'),
+    // 11 Público-Alvo / ICP
+    icp_setor:            gv('s11_icp_setor'),
+    icp_localidade:       gv('s11_icp_localidade'),
+    icp_porte:            gv('s11_icp_porte'),
+    icp_faturamento:      gv('s11_icp_faturamento'),
+    ci_cargo:             gv('s11_ci_cargo'),
+    ci_area:              gv('s11_ci_area'),
+    ci_senioridade:       gv('s11_ci_senioridade'),
+    ci_descricao:         gv('s11_ci_desc'),
+    // 12 Ciência
+    ack_config_30d:       ackv('ack1'),
+    ack_prospeccao_2mes:  ackv('ack2'),
+    ack_responsabilidade: ackv('ack3'),
+    ack_linkedin_premium: ackv('ack4'),
+    ack_info_base:        ackv('ack5')
+  };
+}
+
+function openConfirm(){var m=document.getElementById('confirm-modal');if(m)m.style.display='flex';}
+function closeConfirm(){var m=document.getElementById('confirm-modal');if(m)m.style.display='none';}
+function confirmSend(){closeConfirm();doSubmit();}
+
+function doSubmit(){
+  if(!APPS_SCRIPT_URL){showToast('Configure a URL do Apps Script antes de enviar.');return;}
+  organizeRadar();
+  var btn=document.getElementById('btn-submit');
+  if(btn){btn.disabled=true;btn.innerHTML='<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="animation:spin .8s linear infinite"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg> Enviando…';}
+  var payload;
+  try{payload=JSON.stringify(buildJSON());}catch(err){
+    if(btn){btn.disabled=false;btn.innerHTML='Enviar formulário';}
+    showToast('Erro ao processar dados: '+err.message);return;
+  }
+  fetch(APPS_SCRIPT_URL,{method:'POST',mode:'no-cors',body:payload})
+  .then(function(){
+    if(btn){btn.style.background='#2d8a57';btn.innerHTML='<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12L10 17L19 8"/></svg> Enviado com sucesso!';}
+    showToast('Diagnóstico registrado na planilha!',true);
+  })
+  .catch(function(){
+    if(btn){btn.disabled=false;btn.innerHTML='<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13"/><path d="M22 2L15 22 11 13 2 9l20-7z"/></svg> Enviar formulário';}
+    showToast('Erro na conexão — tente novamente.',false);
+  });
+}
+
+/* ═══════════════════════════════════════════════
+   RADAR — ECOSSISTEMA COMERCIAL (7 eixos pontuados)
+   ═══════════════════════════════════════════════ */
+(function(){
+  var CX=250,CY=205,R=142,N=7;
+  var scores=[0,0,0,0,0,0,0];
+  var aFrames=new Array(7).fill(null);
+
+  var AXES=[
+    {lbl:'EQUIPE',     sec:6},
+    {lbl:'PRODUTO',    sec:8},
+    {lbl:'MERCADO',    sec:10},
+    {lbl:'FUNIL',      sec:12},
+    {lbl:'FINANCEIRO', sec:14},
+    {lbl:'STACK',      sec:16},
+    {lbl:'MATERIAIS',  sec:20}
+  ];
+  var AXIS_MAP={6:0,8:1,10:2,12:3,14:4,16:5,18:3,20:6};
+  /* sec 18 (Prospecção) recalcula Funil (idx 3) */
+
+  /* ── Scoring functions ── */
+  function _scoreEquipe(){
+    var ded=rv('s2_dedicado'),sdr=rv('s2_sdr'),cs=rv('s2_cs');
+    var s=ded==='sim'?3:1;
+    if(sdr==='sim')s+=3;
+    if(cs==='sim')s+=4;
+    return Math.min(10,Math.max(1,s));
+  }
+  function _scoreProduto(){
+    var n=parseInt(gv('s3_nota_produto'));return isNaN(n)?0:Math.max(0,Math.min(10,n));
+  }
+  function _scoreMercado(){
+    var n=parseInt(gv('s4_nota_mercado'));return isNaN(n)?0:Math.max(0,Math.min(10,n));
+  }
+  function _scoreFunil(){
+    var prosp=parseInt(gv('s5_prospeccoes'))||0;
+    var reun=parseInt(gv('s5_reunioes'))||0;
+    var conv=parseInt(gv('s5_conversao'))||0;
+    var str=rv('estrategia');
+    var s=0;
+    if(prosp>0){var r=reun/prosp;if(r>=0.10)s+=4;else if(r>=0.06)s+=3;else if(r>=0.03)s+=2;else if(r>=0.01)s+=1;}
+    if(conv>=7)s+=4;else if(conv>=5)s+=3;else if(conv>=3)s+=2;else if(conv>=1)s+=1;
+    if(str==='sim')s+=2;
+    return Math.min(10,Math.max(1,s));
+  }
+  function _scoreFinanceiro(){
+    var cac=parseFloat(gv('s6_cac_val').replace(/[^d.,]/g,'').replace(',','.'))||0;
+    var ltv=parseFloat(gv('s6_ltv_valor').replace(/[^d.,]/g,'').replace(',','.'))||0;
+    if(cac<=0||ltv<=0)return 3;
+    var r=ltv/cac;
+    if(r>=5)return 10;if(r>=4)return 9;if(r>=3)return 8;
+    if(r>=2)return 6;if(r>=1.5)return 5;if(r>=1)return 4;
+    return 2;
+  }
+  function _scoreStack(){
+    var crm=rv('crm'),nav=rv('navigator'),prem=rv('premium');
+    var ferr=gv('s7_ferramentas').toLowerCase();
+    var s=0;
+    if(crm==='sim'){s+=2;if(gv('s7_crm_uso').trim().length>15)s+=1;}
+    if(nav==='sim')s+=2;
+    if(prem==='sim')s+=1;
+    var kw=['hubspot','salesforce','pipedrive','apollo','lemlist','instantly','reply','snov','hunter','clay','n8n','zapier','make','outreach','salesloft'];
+    s+=Math.min(4,kw.filter(function(k){return ferr.indexOf(k)>=0;}).length);
+    return Math.min(10,Math.max(1,s));
+  }
+  function _scoreMateriais(){
+    var n=parseInt(gv('s9_nota_materiais'));return isNaN(n)?0:Math.max(0,Math.min(10,n));
+  }
+  var SCORE_FNS=[_scoreEquipe,_scoreProduto,_scoreMercado,_scoreFunil,_scoreFinanceiro,_scoreStack,_scoreMateriais];
+
+  /* ── Geometry ── */
+  function ang(i){return (i/N)*2*Math.PI-Math.PI/2;}
+  function ptAt(i,r){var a=ang(i);return{x:CX+r*Math.cos(a),y:CY+r*Math.sin(a)};}
+  function polyPts(sc){return sc.map(function(s,i){var p=ptAt(i,(s/10)*R);return p.x.toFixed(1)+','+p.y.toFixed(1);}).join(' ');}
+  function gridPts(f){return Array.from({length:N},function(_,i){var p=ptAt(i,R*f);return p.x.toFixed(1)+','+p.y.toFixed(1);}).join(' ');}
+  function ta(i){var c=Math.cos(ang(i));return c>0.25?'start':c<-0.25?'end':'middle';}
+  function ldy(i){var s=Math.sin(ang(i));return s<-0.2?-7:s>0.2?14:4;}
+
+  /* ── Render ── */
+  function draw(){
+    var svg=document.getElementById('iso-svg');
+    var leg=document.getElementById('bld-legend');
+    if(!svg)return;
+    var h='';
+    [.25,.5,.75,1].forEach(function(f){
+      h+='<polygon points="'+gridPts(f)+'" fill="none" stroke="rgba(174,138,86,'+(f===1?'.22':'.08')+'" stroke-width="'+(f===1?'.9':'.4')+'"/>';
+    });
+    for(var i=0;i<N;i++){var p=ptAt(i,R);h+='<line x1="'+CX+'" y1="'+CY+'" x2="'+p.x.toFixed(1)+'" y2="'+p.y.toFixed(1)+'" stroke="rgba(174,138,86,.12)" stroke-width="0.5"/>';}
+    [.25,.5,.75,1].forEach(function(f){
+      var tp=ptAt(0,R*f);
+      h+='<text x="'+(tp.x+3).toFixed(1)+'" y="'+(tp.y-3).toFixed(1)+'" font-family="DM Mono,monospace" font-size="6" fill="rgba(174,138,86,.28)" text-anchor="start">'+(f*10)+'</text>';
+    });
+    h+='<polygon id="r-fill" points="'+polyPts(scores)+'" fill="rgba(174,138,86,.12)" stroke="none"/>';
+    h+='<polygon id="r-stroke" points="'+polyPts(scores)+'" fill="none" stroke="#AE8A56" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"/>';
+    for(var i=0;i<N;i++){h+='<circle id="rdot'+i+'" cx="'+CX+'" cy="'+CY+'" r="3.2" fill="#AE8A56" opacity="0"/>';}
+    for(var i=0;i<N;i++){
+      var lp=ptAt(i,R+22);
+      h+='<text id="rlbl'+i+'" x="'+lp.x.toFixed(1)+'" y="'+(lp.y+ldy(i)).toFixed(1)+'" font-family="DM Mono,monospace" font-size="7.5" fill="rgba(174,138,86,.3)" letter-spacing="0.3" text-anchor="'+ta(i)+'">'+AXES[i].lbl+'</text>';
+    }
+    for(var i=0;i<N;i++){
+      var sp=ptAt(i,R*0.62);
+      h+='<text id="rscore'+i+'" x="'+sp.x.toFixed(1)+'" y="'+(sp.y+4).toFixed(1)+'" font-family="DM Mono,monospace" font-size="10" fill="#AE8A56" text-anchor="middle" font-weight="500" opacity="0"></text>';
+    }
+    svg.innerHTML=h;
+    if(leg){leg.innerHTML=AXES.map(function(a,i){return '<div class="bld-item" id="leg'+i+'"><div class="bld-dot"></div><span class="bld-lbl">'+a.lbl+'</span></div>';}).join('');}
+  }
+
+  function refresh(){
+    var f=document.getElementById('r-fill'),s=document.getElementById('r-stroke');
+    var pts=polyPts(scores);
+    if(f)f.setAttribute('points',pts);if(s)s.setAttribute('points',pts);
+    scores.forEach(function(sc,i){
+      var dot=document.getElementById('rdot'+i);
+      if(dot){var p=ptAt(i,(sc/10)*R);dot.setAttribute('cx',p.x.toFixed(1));dot.setAttribute('cy',p.y.toFixed(1));dot.setAttribute('opacity',sc>0?'1':'0');}
+      var lbl=document.getElementById('rlbl'+i);
+      if(lbl)lbl.setAttribute('fill',sc>0?'rgba(174,138,86,.92)':'rgba(174,138,86,.3)');
+      var sc_lbl=document.getElementById('rscore'+i);
+      if(sc_lbl){sc_lbl.textContent=sc>0?Math.round(sc)+'':'' ;sc_lbl.setAttribute('opacity',sc>0?'0.85':'0');}
     });
   }
-  return extras.length ? txt + ': ' + extras.join(' | ') : txt;
-}
 
-function coletarDiagnostico(){
-  var payload = {
-    form_token: FORM_TOKEN,
-    origem: 'ecov-formulario-diagnostico-v1',
-    enviado_em_iso: new Date().toISOString(),
-    pagina: document.title,
-    url_origem: window.location.href,
-    user_agent: navigator.userAgent
+  function setScore(idx,target,dur){
+    if(aFrames[idx])cancelAnimationFrame(aFrames[idx]);
+    var start=scores[idx],t0=null;dur=dur||700;
+    function step(ts){if(!t0)t0=ts;var p=Math.min((ts-t0)/dur,1),e=1-Math.pow(1-p,3);scores[idx]=start+(target-start)*e;refresh();if(p<1)aFrames[idx]=requestAnimationFrame(step);else aFrames[idx]=null;}
+    aFrames[idx]=requestAnimationFrame(step);
+  }
+
+  window.activateBlock=function(sid){
+    var idx=AXIS_MAP[sid];
+    if(idx===undefined)return;
+    var fn=SCORE_FNS[idx];
+    /* For sec 18, recalculate Funil (idx=3) */
+    if(sid===18)fn=_scoreFunil;
+    var score=fn?fn():10;
+    setScore(idx,score);
+    var lg=document.getElementById('leg'+idx);if(lg)lg.classList.add('on');
+    var st=document.getElementById('bld-status');
+    if(st)st.textContent=(AXES[idx]?AXES[idx].lbl:'')+': '+Math.round(score)+'/10';
   };
 
-  document.querySelectorAll('.section:not(#resultado)').forEach(function(section){
-    var sectionTitle = cleanText(section.querySelector('.section-header h2')?.textContent || 'Geral');
-
-    section.querySelectorAll('.field').forEach(function(field){
-      var directLabel = getDirectLabel(field);
-      var question = cleanText(directLabel ? directLabel.textContent : (field.querySelector('label')?.textContent || 'Campo'));
-      var baseKey = slugify(sectionTitle + ' - ' + question);
-
-      var radios = Array.from(field.querySelectorAll('input[type="radio"]'));
-      var radioNames = Array.from(new Set(radios.map(function(r){ return r.name; }).filter(Boolean)));
-      if(radioNames.length){
-        radioNames.forEach(function(name){
-          var checked = field.querySelector('input[type="radio"][name="'+CSS.escape(name)+'"]:checked');
-          payload[uniqueKey(payload, baseKey)] = checked ? serializeOption(checked) : '';
-        });
+  window.organizeRadar=function(){
+    var delay=0;
+    SCORE_FNS.forEach(function(fn,i){
+      var target=fn?fn():10;
+      if(scores[i]<target||(scores[i]===0&&target===0)){
+        (function(idx,d,t){setTimeout(function(){setScore(idx,t,500);var lg=document.getElementById('leg'+idx);if(lg)lg.classList.add('on');},d);})(i,delay,target);
+        delay+=60;
       }
-
-      var checkboxes = Array.from(field.querySelectorAll('input[type="checkbox"]'));
-      if(checkboxes.length){
-        var selected = checkboxes
-          .filter(function(c){ return c.checked; })
-          .map(function(c){ return serializeOption(c); });
-        payload[uniqueKey(payload, baseKey)] = selected.join(' | ');
-      }
-
-      var standaloneControls = Array.from(field.querySelectorAll('input:not([type="radio"]):not([type="checkbox"]), textarea, select'))
-        .filter(function(control){
-          var parentLabel = control.closest('label');
-          var insideOption = parentLabel && parentLabel.querySelector('input[type="radio"], input[type="checkbox"]');
-          return !insideOption;
-        });
-
-      standaloneControls.forEach(function(control, index){
-        var value = textInputValue(control);
-        var key = standaloneControls.length === 1 && !radioNames.length && !checkboxes.length
-          ? baseKey
-          : baseKey + '_detalhe_' + (index + 1);
-        payload[uniqueKey(payload, key)] = value;
-      });
     });
+    setTimeout(function(){var svg=document.getElementById('iso-svg');if(svg)svg.classList.add('done');var st=document.getElementById('bld-status');if(st)st.textContent='Ecossistema comercial diagnósticado.';},delay+500);
+  };
 
-    section.querySelectorAll('.ack').forEach(function(ack){
-      var label = ack.querySelector('label');
-      var checkbox = ack.querySelector('input[type="checkbox"]');
-      var key = slugify(sectionTitle + ' - ' + labelTextWithoutInputs(label));
-      payload[uniqueKey(payload, key)] = checkbox && checkbox.checked ? 'Sim' : 'Não';
-    });
-  });
-
-  return payload;
-}
-
-function enviarParaSheets(payload){
-  return new Promise(function(resolve, reject){
-    if(!GOOGLE_SCRIPT_URL || GOOGLE_SCRIPT_URL.indexOf('COLE_AQUI') >= 0){
-      reject(new Error('Cole a URL do Web App do Google Apps Script na constante GOOGLE_SCRIPT_URL.'));
-      return;
-    }
-
-    var iframeName = 'google_sheets_hidden_iframe';
-    var iframe = document.getElementById(iframeName);
-    if(!iframe){
-      iframe = document.createElement('iframe');
-      iframe.name = iframeName;
-      iframe.id = iframeName;
-      iframe.style.display = 'none';
-      document.body.appendChild(iframe);
-    }
-
-    var form = document.createElement('form');
-    form.method = 'POST';
-    form.action = GOOGLE_SCRIPT_URL;
-    form.target = iframeName;
-    form.style.display = 'none';
-
-    var input = document.createElement('textarea');
-    input.name = 'payload';
-    input.value = JSON.stringify(payload);
-    form.appendChild(input);
-
-    var loaded = false;
-    var timer = window.setTimeout(function(){
-      if(!loaded) resolve();
-    }, 2200);
-
-    iframe.onload = function(){
-      loaded = true;
-      window.clearTimeout(timer);
-      resolve();
-    };
-
-    document.body.appendChild(form);
-    form.submit();
-    window.setTimeout(function(){ form.remove(); }, 1000);
-  });
-}
-
-function enviarDiagnostico(){
-  var btn = document.getElementById('submit-btn');
-  var originalText = btn ? btn.textContent : '';
-
-  try{
-    gerarPreview();
-    var payload = coletarDiagnostico();
-
-    if(btn){
-      btn.disabled = true;
-      btn.textContent = 'Enviando...';
-    }
-    setStatus('info', 'Enviando diagnóstico. Não feche esta página agora.');
-
-    enviarParaSheets(payload)
-      .then(function(){
-        setStatus('ok', 'Diagnóstico enviado. A Veross recebeu as informações para análise.');
-      })
-      .catch(function(err){
-        setStatus('error', err.message || 'Não foi possível enviar o diagnóstico.');
-      })
-      .finally(function(){
-        if(btn){
-          btn.disabled = false;
-          btn.textContent = originalText;
-        }
-      });
-  }catch(err){
-    setStatus('error', err.message || 'Erro ao preparar o envio.');
-    if(btn){
-      btn.disabled = false;
-      btn.textContent = originalText;
-    }
-  }
-}
-
-function val(id){ var el=document.getElementById(id); return el ? el.value.trim() : ""; }
-function num(id){ var v=parseFloat(val(id)); return isNaN(v) ? 0 : v; }
-function len(id){ return val(id).length; }
-function checkedCount(selector){ return document.querySelectorAll(selector+':checked').length; }
-function radioVal(name){ var r=document.querySelector('input[name="'+name+'"]:checked'); return r ? r.value : null; }
-function clamp(v){ return Math.max(0, Math.min(5, v)); }
-
-function gerarPreview(){
-  // 1. Maturidade Comercial (estrutura + funil)
-  var funilFields = ['prospeccoes','reunioes_geradas','vendas_mensais','negocios_perdidos','conversao10','ciclo_venda'];
-  var funilFilled = funilFields.filter(function(id){ return val(id) !== ""; }).length;
-  var comercial = clamp((funilFilled/funilFields.length)*5);
-
-  // 2. Dados / CRM
-  var crm = radioVal('crm');
-  var dadosCrm = 1;
-  if(crm === 'sim'){ dadosCrm = len('crm_como') > 15 ? 5 : 3; }
-  else if(crm === 'nao'){ dadosCrm = 1; }
-  else { dadosCrm = 0; }
-
-  // 3. Presença Digital
-  var midias = checkedCount('.midia');
-  var nav = radioVal('navigator');
-  var premium = radioVal('premium');
-  var presenca = (midias/5)*3;
-  if(nav === 'sim') presenca += 1;
-  if(premium === 'sim') presenca += 1;
-  presenca = clamp(presenca);
-
-  // 4. Materiais de Apoio
-  var nenhum = document.getElementById('materiais_nenhum').checked;
-  var materiais = nenhum ? 0 : clamp((checkedCount('.material')/4)*5);
-
-  // 5. Clareza de Posicionamento / ICP
-  var posTextos = ['publico','diferenciais','objecoes','dores'];
-  var totalLen = posTextos.reduce(function(acc,id){ return acc + len(id); },0);
-  var posicionamento = clamp((totalLen/400)*5); // ~100 chars por campo = nota máxima
-
-  // 6. Capacidade de Absorção
-  var equipe = num('comercial_qtd');
-  var quemRecebe = len('quem_recebe') > 5 ? 1 : 0;
-  var absorcao = clamp((equipe>0?2.5:0) + (quemRecebe*2.5));
-
-  var eixos = [
-    {label:'Maturidade Comercial', valor: comercial},
-    {label:'Dados / CRM', valor: dadosCrm},
-    {label:'Presença Digital', valor: presenca},
-    {label:'Materiais de Apoio', valor: materiais},
-    {label:'Clareza de Posicionamento', valor: posicionamento},
-    {label:'Capacidade de Absorção', valor: absorcao}
-  ];
-
-  desenharRadar(eixos);
-  document.getElementById('resultado').style.display = 'block';
-  document.getElementById('resultado').scrollIntoView({behavior:'smooth'});
-}
-
-function desenharRadar(eixos){
-  var svg = document.getElementById('radar');
-  var cx=180, cy=180, r=130;
-  var n = eixos.length;
-  var angleStep = (2*Math.PI)/n;
-  var html = '';
-
-  // grid rings
-  for(var ring=1; ring<=5; ring++){
-    var pts = [];
-    for(var i=0;i<n;i++){
-      var a = -Math.PI/2 + i*angleStep;
-      var rr = r*(ring/5);
-      pts.push((cx+rr*Math.cos(a)).toFixed(1)+','+(cy+rr*Math.sin(a)).toFixed(1));
-    }
-    html += '<polygon points="'+pts.join(' ')+'" fill="none" stroke="#e3e0d8" stroke-width="1"/>';
-  }
-
-  // axes + labels
-  for(var i=0;i<n;i++){
-    var a = -Math.PI/2 + i*angleStep;
-    var x2 = cx + r*Math.cos(a), y2 = cy + r*Math.sin(a);
-    html += '<line x1="'+cx+'" y1="'+cy+'" x2="'+x2.toFixed(1)+'" y2="'+y2.toFixed(1)+'" stroke="#e3e0d8" stroke-width="1"/>';
-    var lx = cx + (r+22)*Math.cos(a), ly = cy + (r+22)*Math.sin(a);
-    var anchor = 'middle';
-    if(Math.cos(a) > 0.3) anchor='start';
-    else if(Math.cos(a) < -0.3) anchor='end';
-    html += '<text x="'+lx.toFixed(1)+'" y="'+ly.toFixed(1)+'" font-size="10" font-family="Helvetica Neue, Arial, sans-serif" fill="#6b6f85" text-anchor="'+anchor+'" dominant-baseline="middle">'+ (i+1) +'</text>';
-  }
-
-  // data polygon
-  var dataPts = [];
-  for(var i=0;i<n;i++){
-    var a = -Math.PI/2 + i*angleStep;
-    var rr = r*(eixos[i].valor/5);
-    dataPts.push((cx+rr*Math.cos(a)).toFixed(1)+','+(cy+rr*Math.sin(a)).toFixed(1));
-  }
-  html += '<polygon points="'+dataPts.join(' ')+'" fill="rgba(174,138,86,0.35)" stroke="#AE8A56" stroke-width="2"/>';
-
-  // center dot
-  html += '<circle cx="'+cx+'" cy="'+cy+'" r="2" fill="#060923"/>';
-
-  svg.innerHTML = html;
-
-  // legend
-  var legend = document.getElementById('radar-legend');
-  legend.innerHTML = eixos.map(function(e,i){
-    return '<div>'+(i+1)+'. '+e.label+' — '+e.valor.toFixed(1)+'/5</div>';
-  }).join('');
-}
+  document.addEventListener('DOMContentLoaded',draw);
+})();
 </script>
 </body>
 </html>
-
