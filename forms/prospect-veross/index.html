@@ -10,6 +10,7 @@
 <x-dc>
 <helmet>
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <script src="../../config/endpoints.js"></script>
   <style>
     *, *::before, *::after { box-sizing: border-box; }
     body { margin:0; padding:24px 20px 60px; background:#FCFCFC; font-family:'DM Sans',sans-serif; color:#0A0A0A; }
@@ -753,6 +754,13 @@ class Component extends DCLogic {
 
     this.state = { step: 0, form, stepError: '', submitting: false, submitError: '', submitted: false };
 
+    try {
+      const saved = JSON.parse(localStorage.getItem('veross_diagnostico_v3') || 'null');
+      if (saved && saved.form) {
+        this.state = { step: saved.step || 0, form: { ...form, ...saved.form }, stepError: '', submitting: false, submitError: '', submitted: false };
+      }
+    } catch (e) {}
+
     this._fieldHandlers = {};
     SIMPLE_FIELDS.forEach(name => {
       this._fieldHandlers[name] = (e) => {
@@ -765,6 +773,15 @@ class Component extends DCLogic {
   setField(name, value) { this.setState(s => ({ form: { ...s.form, [name]: value } })); }
   setBool(name, value) { this.setState(s => ({ form: { ...s.form, [name]: value } })); }
   setScale(key, n) { this.setState(s => ({ form: { ...s.form, [key]: n } })); }
+
+  persist() {
+    try { localStorage.setItem('veross_diagnostico_v3', JSON.stringify({ step: this.state.step, form: this.state.form })); } catch (e) {}
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.form !== this.state.form || prevState.step !== this.state.step) this.persist();
+    if (this.state.submitted && !prevState.submitted) { try { localStorage.removeItem('veross_diagnostico_v3'); } catch (e) {} }
+  }
 
   toggleCheckbox(group, value, max) {
     this.setState(s => {
